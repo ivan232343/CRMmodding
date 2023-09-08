@@ -5,7 +5,7 @@ const CrmProcessShortly = (type = 1) => {
         // type 1 = funcion para agendar en la bandeja de agendados xd
         document.getElementById("cb_tipi_caso_soporte").value = "36"
         document.querySelector("#div_agendamiento").style.display = "block"
-        document.getElementById("txt_descripcion_caso").value = "se agenda para su pronto tratamiento";
+        document.getElementById("txt_descripcion_caso").value = "se agenda para tratamiento al cliente";
         document.getElementById("bt_guardar").click();
         document.getElementById("boton_enviar_validacion").click()
     }
