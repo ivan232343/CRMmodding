@@ -1,0 +1,9 @@
+.contenido_extension_agendados {
+    position: fixed;
+    bottom: 2.5rem;
+    right: 2.5rem;
+    padding: 2rem;
+    background: black;
+    border-radius: 5rem;
+    z-index: 99999;
+}

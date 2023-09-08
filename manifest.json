@@ -1,0 +1,26 @@
+{
+  "name": "Agendate esta",
+  "manifest_version": 2,
+  "version": "1.1",
+  "description": "para que te la agendes",
+  "browser_action": {
+    "default_icon": "ico.jpeg"
+  },
+  "permissions": [
+    "activeTab"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://172.27.201.14/pages/*"
+      ],
+      "js": [
+        "module/basicfuncs.js",
+        "back_funcs/ag.js"
+      ],
+      "css": [
+        "css/agmods.css"
+      ]
+    }
+  ]
+}
