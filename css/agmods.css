@@ -1,9 +1,89 @@
+.bg-blue {
+    background-color: #3a1a56 !important;
+    color: #fff;
+}
+.modal-col-blue {
+    background-color: #161616 !important;
+    color: white;
+}
+.bg-indigo {
+    background-color: #462f76 !important;
+    color: #fff;
+}
+
+.bg-custom {
+    color: rgb(255, 255, 255);
+    background-color: rgb(70, 47, 118) !important;
+}
+button.btn.waves-effect {
+    padding: 1rem;
+    border-radius: 2.5rem;
+}
+.ext_.content {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 1.65rem 0 .5rem 0;
+}
+
 .contenido_extension_agendados {
     position: fixed;
-    bottom: 2.5rem;
+    top: 2.5rem;
     right: 2.5rem;
     padding: 2rem;
     background: black;
     border-radius: 5rem;
     z-index: 99999;
 }
+/* body, .list, .list > a, span, li.header,.body, ul.paginate_button {
+    background: black !important;
+    color: white !important;
+} */
+
+.abridor_tipi {
+    position: fixed;
+    bottom: 2.5rem;
+    left: 2.5rem;
+    z-index: 99999;
+    padding: 2rem;
+    background: rgb(8, 46, 216);
+    border-radius: 5rem;
+}
+.list-group-item:nth-child(odd) > .row {
+    background: #058fff !important;
+    padding: 1rem;
+}
+.list-group-item:nth-child(even) > .row {
+    background: black;
+    color: white;
+    padding: 1rem;
+}
+.label {
+    display: inline;
+    padding: .2em .6em .3em;
+    font-size: 75%;
+    font-weight: bold;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+}
+.label-success {
+    background-color: #2b982b;
+}
+.label-danger{
+    background-color: red;
+}
+
+.form-group .form-line {
+    border-bottom: 0 !important; 
+}
+input, textarea, select {
+    border-radius: 1.2rem !important;
+    border-bottom: none;
+    margin-bottom: 0;
+    text-align: center;
+}
+

@@ -1,8 +1,8 @@
 {
-  "name": "Agendate esta",
+  "name": "CRM modding",
   "manifest_version": 2,
-  "version": "1.1",
-  "description": "para que te la agendes",
+  "version": "3.6",
+  "description": "herramientas adicionales para CRM experiencia y una que otra mejora",
   "browser_action": {
     "default_icon": "ico.jpeg"
   },
@@ -15,6 +15,7 @@
         "http://172.27.201.14/pages/*"
       ],
       "js": [
+        "back_funcs/custom_functions.js",
         "module/basicfuncs.js",
         "back_funcs/ag.js"
       ],
