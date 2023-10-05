@@ -16,7 +16,7 @@ document.querySelector("#tablaCasos tbody").addEventListener("click", (e) => Ini
 // let openLastTipi = document.createElement("div");
 // openLastTipi.classList.add("abridor_tipi")
 // document.body.appendChild(openLastTipi)
-// openLastTipi.addEventListener("click", () => openLastTipiPopUp())
+// openLastTipi.addEventListener("click", () => openLastTipiPopUp());
 if (document.location.pathname === "/pages/ajax/atc_registro_llamada_busca_cliente_cel.php") {
     let basicStyles = document.body.style
     basicStyles.margin = "auto"; basicStyles.fontFamily = "serif system-ui"; basicStyles.fontSize = "1.25rem"
