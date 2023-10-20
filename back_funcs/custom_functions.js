@@ -1,4 +1,3 @@
-
 const listarRegistroXTicket = () => {
     let id_reg = document.getElementById("txt_id_reg").value
     let id_caso = document.getElementById("txt_id_caso").value
@@ -32,22 +31,25 @@ const mostrarCamposCliente = () => {
     xhr.getResponseHeader("Content-type", "text/html");
     xhr.onreadystatechange = (e) => {
         if (xhr.readyState === 4) {
-            console.log(e.target)
+            let extContentInner = "";
             document.getElementById("div_ajax_cliente").innerHTML = e.target.response
             let rowSelected = document.querySelectorAll("#div_ajax_cliente .row.clearfix")[3]
             let mainelement = document.createElement("div")
             mainelement.classList.add("col-xs-6", "col-sm-6", "col-md-4", "col-lg-4")
-            mainelement.innerHTML = `
-            <div class="ext_ content">
-            <div class="btn btn-warning ext_ agendados">A la bandeja</div>
-            <div class="btn btn-warning ext_ ticketlist">Historial de tickets</div>
-            <div class="btn btn-warning ext_ ontinfo">Info ONT</div>
-            </div>
-            `
+            let extContent = document.createElement("div")
+            extContent.classList.add("ext_", "content");
+            let configCRM = JSON.parse(localStorage.getItem("configCRM")).extFunction;
+            extContentInner += (configCRM.agendar) ? `<div class="btn btn-warning ext_ agendados">A la bandeja</div>` : "";
+            extContentInner += (configCRM.listTkt) ? `<div class="btn btn-warning ext_ ticketlist">Historial de tickets</div>` : "";
+            extContentInner += (configCRM.serviceinfo) ? `<div class="btn btn-warning ext_ ontinfo">Info ONT</div>` : "";
+            extContentInner += (configCRM.findgo) ? `<div class="btn btn-warning ext_ closedgo">Cerrar tkt (DGO)</div>` : "";
+            if (configCRM.limitChar) limitchar();
+            extContent.innerHTML = extContentInner
+            mainelement.appendChild(extContent)
+            configCRM.agendar ? mainelement.querySelector(".ext_.agendados").addEventListener("click", () => CrmProcessShortly()) : "";
+            configCRM.listTkt ? mainelement.querySelector(".ext_.ticketlist").addEventListener("click", () => openLastTipiPopUp()) : "";
+            configCRM.serviceinfo ? mainelement.querySelector(".ext_.ontinfo").addEventListener("click", () => mostrarONTinfo()) : "";
             rowSelected.appendChild(mainelement)
-            document.querySelector(".ext_.agendados").addEventListener("click", () => CrmProcessShortly());
-            document.querySelector(".ext_.ticketlist").addEventListener("click", () => openLastTipiPopUp());
-            document.querySelector(".ext_.ontinfo").addEventListener("click", () => mostrarONTinfo());
         }
     }
 }
