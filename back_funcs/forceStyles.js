@@ -1,1 +1,1 @@
-// document.styleSheets[8].addRule("a.toggled.waves-effect, a.waves-effect.waves-block:hover, a.waves-effect.waves-block:hover > *", "color:red !important")
+d// document.styleSheets[8].addRule("a.toggled.waves-effect, a.waves-effect.waves-block:hover, a.waves-effect.waves-block:hover > *", "color:red !important")

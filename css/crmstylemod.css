@@ -206,3 +206,8 @@ section.content {
   background-size: cover;
   background-blend-mode: color-dodge;
 } */
+#div_ajax_atenciones .body.table-responsive {
+  max-height: 37rem;
+  height: auto;
+  margin-bottom: 1.5rem;
+}

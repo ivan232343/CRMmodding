@@ -34,7 +34,8 @@ window.onload = () => {
     document.querySelector(".image img").src = configSaved.avatar;
     let fondo = document.querySelector(".user-info");
     fondo.style.backgroundImage = `url(${configSaved.background})`;
-    fondo.style.backgroundRepeat = "round";
+    fondo.style.backgroundSize = "cover";
+    fondo.style.backgroundRepeat = "no-repeat";
     let letter = document.querySelector(".info-container");
     letter.childNodes.forEach(e => {
         if (e.nodeName !== "#text") {
@@ -56,19 +57,37 @@ if (ValidatePath("atc_registro_llamada_busca_cliente_cel")) {
 } else if (!ValidatePath("atc_registro_llamadas")) {
     document.querySelector("#tablaCasos tbody").addEventListener("click", (e) => InitFunction())
 }
-const limitchar = () => {
-    let inputToLimit = document.getElementById('txt_descripcion_caso');
+const limitchar = (turn) => {
     let labelToMod = document.querySelector('label[for="Cod ALumno"]')
-    inputToLimit.addEventListener('input', (ev) => {
-        labelToMod.innerText = `Ingrese sus observaciones: caracteres ${ev.target.value.length} / 367`
-        if (ev.target.value.length < 367) {
-            console.log("sigue escribiendo");
-        } else {
-            let dividoEn = (ev.target.value.length / 367) + 1
-            let saveTempDesc = inputToLimit.value.match(/.{1,367}/g)
-            labelToMod.innerText = `Ingrese sus observaciones: caracteres: ${ev.target.value.length}/367 \t veces que debe ser partido: ${dividoEn.toFixed()}`
+    if (turn) {
+        let inputToLimit = document.getElementById('txt_descripcion_caso');
+        inputToLimit.addEventListener('input', (ev) => {
+            labelToMod.innerText = `Ingrese sus observaciones: caracteres ${ev.target.value.length} / 367`
+            if (ev.target.value.length < 367) {
+                console.log("sigue escribiendo");
+            } else {
+                let dividoEn = (ev.target.value.length / 367) + 1
+                let saveTempDesc = inputToLimit.value.match(/.{1,367}/g)
+                labelToMod.innerText = `Ingrese sus observaciones: caracteres: ${ev.target.value.length}/367 \t veces que debe ser partido: ${dividoEn.toFixed()}`
 
-            console.log("cuidado estas al limite");
-        }
+                console.log("cuidado estas al limite");
+                console.log(saveTempDesc);
+            }
+        })
+    } else {
+        labelToMod.innerText = 'Ingrese sus observaciones: ';
+    }
+}
+const copyTextTable = () => {
+    document.querySelectorAll('.text-center').forEach((e) => {
+        e.addEventListener('click', (ev) => {
+            console.log(ev.target.textContent.split(' ').join('\t'))
+            var content = document.getElementById('txt_descripcion_caso');
+            content.innerHTML = ev.target.textContent.split(' ').join('\t');
+            content.focus();
+            content.select();
+            document.execCommand('copy')
+            content.innerHTML = '';
+        })
     })
 }

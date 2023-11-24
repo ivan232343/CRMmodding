@@ -1,9 +1,10 @@
 {
   "name": "CRM modding",
-  "manifest_version": 2,
+  "manifest_version": 3,
   "version": "4.6",
   "description": "herramientas adicionales para CRM experiencia y una que otra mejora /\n ahora puedes personalizar tu avatar y el fondo",
-  "browser_action": {
+  "lang": "ES-pe",
+  "action": {
     "default_icon": "ico.jpeg"
   },
   "permissions": [

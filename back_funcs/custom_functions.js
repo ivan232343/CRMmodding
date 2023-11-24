@@ -22,7 +22,7 @@ const listarRegistroXTicket = () => {
 }
 const mostrarCamposCliente = () => {
     let id_reg = document.getElementById("txt_id_reg").value
-    var parametros = `cod_id_reg=${id_reg}`;
+    let parametros = `cod_id_reg=${id_reg}`;
     const xhr = new XMLHttpRequest()
     xhr.open("POST", "ajax/soporte_visita_mostrarinfo.php?");
     xhr.setRequestHeader("Charset", "UTF-8");
@@ -43,12 +43,13 @@ const mostrarCamposCliente = () => {
             extContentInner += (configCRM.listTkt) ? `<div class="btn btn-warning ext_ ticketlist">Historial de tickets</div>` : "";
             extContentInner += (configCRM.serviceinfo) ? `<div class="btn btn-warning ext_ ontinfo">Info ONT</div>` : "";
             extContentInner += (configCRM.findgo) ? `<div class="btn btn-warning ext_ closedgo">Cerrar tkt (DGO)</div>` : "";
-            if (configCRM.limitChar) limitchar();
             extContent.innerHTML = extContentInner
             mainelement.appendChild(extContent)
             configCRM.agendar ? mainelement.querySelector(".ext_.agendados").addEventListener("click", () => CrmProcessShortly()) : "";
             configCRM.listTkt ? mainelement.querySelector(".ext_.ticketlist").addEventListener("click", () => openLastTipiPopUp()) : "";
             configCRM.serviceinfo ? mainelement.querySelector(".ext_.ontinfo").addEventListener("click", () => mostrarONTinfo()) : "";
+
+            limitchar(configCRM.limitChar);
             rowSelected.appendChild(mainelement)
         }
     }
@@ -56,4 +57,7 @@ const mostrarCamposCliente = () => {
 const InitFunction = () => {
     window.ajax_mostrar_cliente = mostrarCamposCliente();
     window.ajax_mostrar_atenciones = listarRegistroXTicket();
+}
+const mostrarInfoCliente = () => {
+
 }

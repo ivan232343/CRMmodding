@@ -60,6 +60,7 @@ function SaveSettingCrm() {
         "ShortCutInfoServ": document.getElementById("sc-info").checked,
         "ShortCutCloseDgo": document.getElementById("sc-clsdgo").checked,
         "ShortLimitCharDesc": document.getElementById("sc-limitchar").checked,
+
     }
     let SaveSetting = {
         "avatar": toChange.TempAvatar,
@@ -74,14 +75,18 @@ function SaveSettingCrm() {
     }
     localStorage.configCRM = JSON.stringify(SaveSetting)
 }
-document.getElementById("avatar_custom").addEventListener("input", (e) => {
+let banner = document.getElementById("banner_custom")
+let avatar = document.getElementById("avatar_custom")
+avatar.addEventListener("input", (e) => {
     document.querySelector(".user-info .image img").src = e.target.value
     SaveSettingCrm();
 })
-document.getElementById("banner_custom").addEventListener("input", (e) => {
+banner.addEventListener("input", (e) => {
     document.querySelector(".user-info").style.backgroundImage = `url(${e.target.value})`
     SaveSettingCrm();
 })
+avatar.addEventListener("click", (e) => e.target.select())
+banner.addEventListener("click", (e) => e.target.select())
 document.querySelectorAll(".item [type=checkbox]").forEach((e) => {
     e.addEventListener("change", () => SaveSettingCrm())
 })
