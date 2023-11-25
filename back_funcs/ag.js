@@ -46,6 +46,11 @@ window.onload = () => {
     });
     window.ajax_mostrar_cliente = mostrarCamposCliente();
     window.ajax_mostrar_atenciones = listarRegistroXTicket();
+    document.querySelectorAll(".dropdown-menu").forEach((e) => {
+        e.addEventListener('click', (ev) => {
+            ev.stopPropagation();
+        })
+    })
 }
 document.getElementById("txt_busca").addEventListener("input", e => e.target.value = e.target.value.replaceAll("AT-", ""))
 

@@ -211,3 +211,20 @@ section.content {
   height: auto;
   margin-bottom: 1.5rem;
 }
+.main_box {
+  width: 55rem;
+  max-height: 350px;
+  height: 25rem;
+}
+.extension.content._getcto {
+  padding: 1.5rem;
+}
+select#s_data_to {
+  color: black;
+}
+.resultado {
+  padding: 1rem;
+  & .item{
+    
+  }
+}

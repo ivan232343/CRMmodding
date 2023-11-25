@@ -1,11 +1,10 @@
 {
   "name": "CRM modding",
-  "manifest_version": 3,
+  "manifest_version": 2,
   "version": "4.6",
   "description": "herramientas adicionales para CRM experiencia y una que otra mejora /\n ahora puedes personalizar tu avatar y el fondo",
-  "lang": "ES-pe",
-  "action": {
-    "default_icon": "ico.jpeg"
+  "browser_action": {
+    "default_icon": "ico.ico"
   },
   "permissions": [
     "activeTab"
@@ -17,6 +16,7 @@
       ],
       "js": [
         "back_funcs/popConfigExt.js",
+        "back_funcs/popGetCTO.js",
         "back_funcs/custom_functions.js",
         "module/basicfuncs.js",
         "back_funcs/ag.js",
