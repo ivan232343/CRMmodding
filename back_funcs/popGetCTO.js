@@ -10,14 +10,13 @@ document.querySelector("#navbar-collapse").appendChild(niu).innerHTML = `
     </a>
     <ul class="dropdown-menu">
         <div class="main_box">
-            <li class="header"> ???? aun no se que nombre poner</li>
+            <li class="header"> Listado de CTO </li>
             <li class="body">
                 <div class="context_menu">
                     <div class="extension content _getcto">
                         <div class="advertencias">
                             <p>Aqui podras obtener los CTO dependiendo el motivo</p>
-                            <span>Advertencia: Dependiendo de la cantidad de tickets, demorara la consulta, ten
-                                paciencia</span>
+                            <span>Advertencia: Dependiendo de la cantidad de tickets, puede que tarde la consulta. Ten paciencia!</span>
                         </div>
                         <div >
                                 <div class="item">
@@ -59,7 +58,7 @@ document.querySelector("#navbar-collapse").appendChild(niu).innerHTML = `
 
 async function getHTML(idReg) {
     const div = document.querySelector('.extension.content._getcto .resultado');
-    div.innerHTML = 'trantando la data del servidor...';
+    div.innerHTML = 'Extrayendo datos...';
     let response = await fetch(`ajax/soporte_visita_mostrarinfo.php?cod_id_reg=${idReg}`);
     let html = await response.text();
     let parse = new DOMParser();
@@ -69,7 +68,7 @@ async function getHTML(idReg) {
 }
 async function getDataTable() {
     const div = document.querySelector('.extension.content._getcto .resultado');
-    div.innerHTML = 'cargando datos del servidor...';
+    div.innerHTML = 'Obteniendo tickets...';
     let buscador = document.querySelector("#txt_busca").value;
     let idEmpresa = document.querySelector("#txt_id_empresa").value;
     let dniUser = document.querySelector("#txt_dni_usuario").value;
