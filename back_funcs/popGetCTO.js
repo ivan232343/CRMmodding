@@ -5,14 +5,14 @@ document.querySelector("#navbar-collapse").appendChild(niu).innerHTML = `
 <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="margin-top:8px;" role="button"
         aria-expanded="true">
-        <i class="material-icons">notifications</i>
+        <i class="material-icons">playlist_play</i>
         <span class="label-count"><span class="count"></span></span>
     </a>
     <ul class="dropdown-menu">
         <div class="main_box">
             <li class="header"> ???? aun no se que nombre poner</li>
             <li class="body">
-                <div class="menu">
+                <div class="context_menu">
                     <div class="extension content _getcto">
                         <div class="advertencias">
                             <p>Aqui podras obtener los CTO dependiendo el motivo</p>
@@ -43,6 +43,14 @@ document.querySelector("#navbar-collapse").appendChild(niu).innerHTML = `
                 </div>
             </li>
             <li class="footer">
+            <div class="context _persist_">
+            <div class="box-title">
+            <p>Conteo de tickets pendientes</p>
+            </div>
+                <div class="box-data">
+            
+                    </div>
+                </div>
             </li>
         </div>
     </ul>
@@ -85,6 +93,26 @@ async function getDataTable() {
         console.error(error);
     }
 }
+getDataTable()
+    .then(reponse => {
+        console.log(reponse)
+        const div = document.querySelector('.extension.content._getcto .resultado');
+        const divInterno = document.querySelector('.box-data')
+        div.innerHTML = '';
+        divInterno.innerHTML = ''
+        if (reponse.counteo !== null) {
+            for (const motivo in reponse.counteo) {
+                const item = document.createElement('div');
+                const dataElement = document.createElement('p');
+                const value = reponse.counteo[motivo];
+                dataElement.textContent = `${motivo}: ${value}`;
+                item.appendChild(dataElement);
+                divInterno.appendChild(item);
+            }
+        } else {
+            div.innerHTML = 'No se valida tickets pendientes';
+        }
+    })
 document.querySelector("#btn_get_cto_data").addEventListener("click", (e) => {
     e.preventDefault();
     // http://172.27.201.14/pages/ajax/soporte_asesor_casos_lista.php?id_empresa=1&dni_usuario=72510503&id_subarea=8&buscador=&estado=1&cb_busca_columna=0&ventana=2&cb_cliente_elite=3
@@ -100,7 +128,6 @@ document.querySelector("#btn_get_cto_data").addEventListener("click", (e) => {
                 div.innerHTML = 'Acomodando los datos, un momento mas...';
                 console.log(results)
                 if (results.length > 0) {
-                    let conteo = results.length
                     results = results.reduce((acc, curr) => {
                         if (curr in acc) {
                             acc[curr]++;
@@ -111,8 +138,6 @@ document.querySelector("#btn_get_cto_data").addEventListener("click", (e) => {
                     }, {});
                     const keys = Object.keys(results);
                     div.innerHTML = "";
-                    const item = document.createElement('div');
-                    const dataElement = document.createElement('p');
                     keys.forEach((key) => {
                         const item = document.createElement('div');
                         const dataElement = document.createElement('p');
@@ -120,27 +145,24 @@ document.querySelector("#btn_get_cto_data").addEventListener("click", (e) => {
                         dataElement.textContent = `${key}: ${value}`;
                         item.appendChild(dataElement);
                         div.appendChild(item);
-                        // const valueElement = document.createElement('p');
-                        // valueElement.textContent = value;
                     });
+                } else {
+                    div.innerHTML = 'No se encontraron datos';
+                }
+                const divInterno = document.querySelector('.box-data')
+                divInterno.innerHTML = ''
+                if (data.counteo !== null) {
                     for (const motivo in data.counteo) {
                         const item = document.createElement('div');
                         const dataElement = document.createElement('p');
                         const value = data.counteo[motivo];
                         dataElement.textContent = `${motivo}: ${value}`;
                         item.appendChild(dataElement);
-                        div.appendChild(item);
+                        divInterno.appendChild(item);
                     }
-                    dataElement.innerHTML = `<p>Casos totales de ${motivo} es: ${conteo}<br>${data.counteo}</p>`
-                    item.appendChild(dataElement);
-                    div.appendChild(item);
-                    // getCountDataTable().then(e => { ; })
-                    // valueElement.textContent = value;
-
                 } else {
-                    div.innerHTML = 'No se encontraron datos';
+                    divInterno.innerHTML = 'No se valida tickets pendientes';
                 }
-
             })
             .catch(error => {
                 console.log(error)
