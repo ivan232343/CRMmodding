@@ -215,8 +215,6 @@ section.content {
   width: max-content;
 }
 .main_box li.body {
-  height: 15rem;
-  max-height: 560px;
   background: black;
 }
 .extension.content._getcto {
@@ -226,11 +224,13 @@ select#s_data_to {
   color: black;
 }
 .resultado {
+  max-height: 25rem;
+  overflow: auto;
   padding: 1rem;
   display: grid;
   justify-items: center;
   grid-template-columns: 1fr 1fr;
-  gap: 10rem;
+  gap: 2.5rem;
 }
 .box-title {
   padding: 1rem;
@@ -239,9 +239,9 @@ select#s_data_to {
   font-size: 2rem;}
 }
 .box-data {
-  padding: 1rem;
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  justify-items: center;
 }
 

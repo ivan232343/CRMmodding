@@ -1,4 +1,4 @@
-
+const dataWindowLink = [{ ventana: 5, link: "agendados" }, { ventana: 2, link: "asesor_casos" }, { ventana: 3, link: "visitas_lista_casos" }, { ventana: 3, link: "visitas_lista_casos_provincias" }, { ventana: 7, link: "garantia_supervisor" }, { ventana: 12, link: "plantaext" }]
 let niu = document.createElement('ul')
 niu.classList.add('nav', 'navbar-nav', 'navbar-right')
 document.querySelector("#navbar-collapse").appendChild(niu).innerHTML = `
@@ -66,19 +66,29 @@ async function getHTML(idReg) {
     let cto = doc.getElementById('txt_cto').value;
     return cto;
 }
+function getUriFetch(windows) {
+    const buildUri = (windows === 2 || windows === 7 || windows === 12) ? "asesor_casos_lista" : (windows === 5) ? 'asesor_agendados_lista2' : (windows === 3) ? 'visitas_lista_casos2_lista' : 'no_data'
+    return buildUri;
+}
 async function getDataTable() {
+    let ventana = "";
+    for (const prop in dataWindowLink) {
+        if (window.location.pathname.includes(dataWindowLink[prop].link))
+            ventana = dataWindowLink[prop].ventana
+    }
     const div = document.querySelector('.extension.content._getcto .resultado');
     div.innerHTML = 'Obteniendo tickets...';
-    let buscador = document.querySelector("#txt_busca").value;
-    let idEmpresa = document.querySelector("#txt_id_empresa").value;
+    let idEmpresa = 1;
+    let buscador = "";
+    let cbSearchCol = 0;
+    let cbClienteElite = 3;
     let dniUser = document.querySelector("#txt_dni_usuario").value;
     let idSubArea = document.querySelector("#txt_id_subarea").value;
     let estado = document.querySelector("#busca_estado").value;
-    let cbSearchCol = document.querySelector("#cb_busca_columna").value;
-    let cbClienteElite = document.querySelector("#cb_elite_cliente").value;
-    let ventana = 2;
+    let idCargo = document.querySelector('#txt_id_cargo') !== null ? document.querySelector('#txt_id_cargo').value : "";
+    let ubigeo = ventana !== 3 ? '' : window.location.pathname.includes('provincias') ? "00150100" : '';
     try {
-        let url = `ajax/soporte_asesor_casos_lista.php?id_empresa=${idEmpresa}&dni_usuario=${dniUser}&id_subarea=${idSubArea}&buscador=${buscador}&estado=${estado}&cb_busca_columna=${cbSearchCol}&ventana=${ventana}&cb_cliente_elite=${cbClienteElite}`
+        let url = `ajax/soporte_${getUriFetch(ventana)}.php?id_empresa=${idEmpresa}&dni_usuario=${dniUser}&id_subarea=${idSubArea}&buscador=${buscador}&estado=${estado}&cb_busca_columna=${cbSearchCol}&ventana=${ventana}&cb_cliente_elite=${cbClienteElite}&id_cargo=${idCargo}&ubigeo=${ubigeo}`
         const response = await fetch(url);
         const data = await response.json();
         const count = {};
@@ -86,7 +96,6 @@ async function getDataTable() {
             const motivo = obj.motivo;
             (count[motivo]) ? count[motivo]++ : count[motivo] = 1
         }
-
         return { "data": data, "counteo": count };
     } catch (error) {
         console.error(error);

@@ -1,9 +1,9 @@
 {
   "name": "CRM modding",
-  "manifest_version": 2,
+  "manifest_version": 3,
   "version": "4.6",
   "description": "herramientas adicionales para CRM experiencia y una que otra mejora /\n ahora puedes personalizar tu avatar y el fondo",
-  "browser_action": {
+  "action": {
     "default_icon": "ico.ico"
   },
   "permissions": [
@@ -26,5 +26,6 @@
         "css/crmstylemod.css"
       ]
     }
-  ]
+  ],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuGvsSmB9+tZazq/uRqHKz3YCajoU2+jxq+gUGXJ1eJSKzdKBZCZEZAMepC0AwOYgTT5JJX7WH7DSKQFRCAHkg9NRpvzsbXoXF3vuLZSwl2msO4ujG1vubanw5XHZfnUdemJQfXUiYco5jpZkDXaK3ghKzzrGWTLJxy8NFVVvuPsZDjujgAkcLl9/2Ct1L/6hM9fOFZbRxSxbwSL9xwAk7wCtGXcs5PWBISQHU6UMU9u4txaC1RM5crFnbMZqlDFcsFjFBGw7Y5F92+rMJs1sJtXLWRz6LFfG/Zv6TUcE1M0Sp4mRYKDWc8hpL1G1jET8WCtdSOD7N7mv/DHE5u0+zwIDAQAB"
 }
