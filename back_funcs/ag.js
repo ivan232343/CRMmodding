@@ -10,11 +10,13 @@ if (localStorage.getItem("configCRM") !== null) {
             "listTkt": true,
             "serviceinfo": true,
             "findgo": false,
-            "limitChar": true
+            "limitChar": true,
+            "alertcto": true
         }
     }
     localStorage.setItem("configCRM", JSON.stringify(initalConfiguration))
 }
+
 document.body.classList.remove("theme-red")
 
 
@@ -30,6 +32,19 @@ document.body.classList.remove("theme-red")
 
 
 window.onload = () => {
+
+    if (window.location.pathname === '/pages/soporte_asesor_casos.php') {
+        // const getterCTO = setInterval(() => {
+        //     getDataTable(12).then((d) => { console.log(d) })
+        // }, 100)
+        // getterCTO()
+    }
+    // inicializar el div del modal 
+    let mdlCustom = document.querySelector('#mdModal')
+    let initDiv = document.createElement('div')
+    initDiv.id = "init-ext";
+    mdlCustom.appendChild(initDiv)
+    // ----------
     const configSaved = JSON.parse(localStorage.configCRM)
     document.querySelector(".image img").src = configSaved.avatar;
     let fondo = document.querySelector(".user-info");
@@ -44,15 +59,16 @@ window.onload = () => {
             e.style.fontWeight = "bolder";
         }
     });
-    window.ajax_mostrar_cliente = mostrarCamposCliente();
-    window.ajax_mostrar_atenciones = listarRegistroXTicket();
+    // window.ajax_mostrar_cliente = mostrarCamposCliente();
+    // window.ajax_mostrar_atenciones = listarRegistroXTicket();
     document.querySelectorAll(".dropdown-menu").forEach((e) => {
         e.addEventListener('click', (ev) => {
             ev.stopPropagation();
         })
     })
 }
-document.getElementById("txt_busca").addEventListener("input", e => e.target.value = e.target.value.replaceAll("AT-", ""))
+document.getElementById("txt_busca").addEventListener("input", e => e.target.value = e.target.value.replaceAll(/[a-zA-Z]+-/g, ""))
+// document.getElementById("txt_date_visita").removeAttribute("max")
 
 if (ValidatePath("atc_registro_llamada_busca_cliente_cel")) {
     let basicStyles = document.body.style
@@ -60,8 +76,20 @@ if (ValidatePath("atc_registro_llamada_busca_cliente_cel")) {
     basicStyles.fontFamily = "serif system-ui";
     basicStyles.fontSize = "1.25rem"
 } else if (!ValidatePath("atc_registro_llamadas")) {
-    document.querySelector("#tablaCasos tbody").addEventListener("click", (e) => InitFunction())
-}
+    document.querySelector("#tablaCasos tbody").addEventListener("click", (ev) => {
+        if (ev.target.localName !== 'td') {
+            let element = '';
+            if (ev.target.localName !== 'button') {
+                element = ev.srcElement.offsetParent.parentElement.parentElement.parentElement
+            } else {
+                element = ev.target.parentElement.parentElement
+            }
+            element = element.querySelectorAll('td')[4].innerText.replace(/[a-zA-Z]+-/g, "")
+            InitFunction(element)
+
+        }
+    })
+};
 const limitchar = (turn) => {
     let labelToMod = document.querySelector('label[for="Cod ALumno"]')
     if (turn) {
@@ -95,4 +123,14 @@ const copyTextTable = () => {
             content.innerHTML = '';
         })
     })
+}
+if (localStorage.getItem('StatusGetterPEXT') === null) {
+    localStorage.setItem('StatusGetterPEXT', JSON.stringify({ 'InProgress': false, 'inCooldown': false, 'left': 0 }))
+} else {
+    let getter = JSON.parse(localStorage.getItem('StatusGetterPEXT'))
+    if (getter.nextTo) {
+        let onMemory = new Date(getter.nextTo)
+        countdown(onMemory)
+    }
+    else { console.log('no esta') }
 }
