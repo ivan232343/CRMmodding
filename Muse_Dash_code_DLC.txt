@@ -1,0 +1,31 @@
+define(DLC_CHECK,Steamworks.SteamApps.BIsDlcInstalled)
+
+define(bytes, 40 53 48 83 EC 20 8B D9 33 C9 E8)
+
+[ENABLE]
+
+{$lua}
+
+if LaunchMonoDataCollector() ~= 0 then
+
+local mId = mono_findMethod('Steamworks', 'SteamApps', 'BIsDlcInstalled')
+
+mono_compile_method(mId)
+
+end
+
+{$asm}
+
+assert(DLC_CHECK, bytes)
+
+DLC_CHECK:
+
+mov rax, 1
+
+ret
+
+[DISABLE]
+
+DLC_CHECK:
+
+db bytes
