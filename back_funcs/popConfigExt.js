@@ -1,14 +1,13 @@
 let DataReader = JSON.parse(localStorage.configCRM)
 document.querySelector(".nav.navbar-nav.navbar-right").innerHTML = `
 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" style="margin-top:8px;" role="button">
-    <i class="material-icons">notifications</i>
-    <span class="label-count"><span class="count"></span></span>
-</a>
-<ul class="dropdown-menu">
-    <li class="header">Configuracion de la extension</li>
-    <li class="body">
-        <ul class="menu">
-            <ul>
+        <i class="material-icons">settings</i>
+        <span class="label-count"><span class="count"></span></span>
+    </a>
+    <ul class="dropdown-menu">
+        <li class="header">Configuracion de la extension</li>
+        <li class="body">
+            <ul class="menu">
                 <div class="extension content _settings">
                     <div class="item">
                         <label for="avatar_custom">Avatar</label>
@@ -18,36 +17,50 @@ document.querySelector(".nav.navbar-nav.navbar-right").innerHTML = `
                         <label for="banner_custom">Banner</label>
                         <input type="text" name="banner_custom" id="banner_custom" value="${DataReader.background}">
                     </div>
+                    <div class="item _box-addons">
                     <div class="item">
-                            <h3>Herramientas {beta} </h3>
-                            <div class="_sub">
-                                <label for="sc-ag">Agendar</label>
-                                <input type="checkbox" name="sc-ag" id="sc-ag" ${(DataReader.extFunction.agendar) ? "checked" : ""}>
-                            </div>
-                            <div class="_sub">
-                                <label for="sc-hist">Historial</label>
-                                <input type="checkbox" name="sc-hist" id="sc-hist" ${(DataReader.extFunction.listTkt) ? "checked" : ""}>
-                            </div>
-                            <div class="_sub">
-                                <label for="sc-info">Info serv.</label>
-                                <input type="checkbox" name="sc-info" id="sc-info" ${(DataReader.extFunction.serviceinfo) ? "checked" : ""}>
-                            </div>
-                            <div class="_sub">
-                                <label for="sc-clsdgo">Cerrar tkt (DGO)</label>
-                                <input type="checkbox" name="sc-clsdgo" id="sc-clsdgo" ${(DataReader.extFunction.findgo) ? "checked" : ""}>
-                            </div>
-                            <div class="_sub">
+                        <h3>Herramientas general {beta} </h3>
+                        <div class="_sub">
+                            <label for="sc-ag">Agendar</label>
+                            <input type="checkbox" name="sc-ag" id="sc-ag" ${(DataReader.extFunction.agendar) ? "checked" : ""}>
+                        </div>
+                        <div class="_sub">
+                            <label for="sc-hist">Historial</label>
+                            <input type="checkbox" name="sc-hist" id="sc-hist" ${(DataReader.extFunction.listTkt) ? "checked" : ""}>
+                        </div>
+                        <div class="_sub">
+                            <label for="sc-info">Info serv.</label>
+                            <input type="checkbox" name="sc-info" id="sc-info" ${(DataReader.extFunction.serviceinfo) ? "checked" : ""}>
+                        </div>
+
+                        <div class="_sub">
                             <label for="sc-limitchar">Limitador de caracteres</label>
-                            <input type="checkbox" name="sc-limitchar" id="sc-limitchar" ${(DataReader.extFunction.limitChar) ? "checked" : ""}>
+                            <input type="checkbox" name="sc-limitchar" id="sc-limitchar"${(DataReader.extFunction.limitChar) ? "checked" : ""}>
                         </div>
+
+                    </div>
+                    <div class="item">
+                        <h3>AT-monitoreo</h3>
+                        <div class="_sub">
+                            <label for="sc-alertcto">Alertar CTO</label>
+                            <input type="checkbox" name="sc-alertcto" id="sc-alertcto"${(DataReader.extFunction.alertcto) ? "checked" : ""}>
+
                         </div>
+                    </div>
+                    <div class="item">
+                        <h3>AT-DGO</h3>
+                        <div class="_sub">
+                            <label for="sc-clsdgo">Cerrar tkt (DGO)</label>
+                            <input type="checkbox" name="sc-clsdgo" id="sc-clsdgo" ${(DataReader.extFunction.findgo) ? "checked" : ""}>
+                        </div>
+                    </div>
+                    </div>
                 </div>
             </ul>
-        </ul>
-    </li>
-    <li class="footer">
-    </li>
-</ul>
+        </li>
+        <li class="footer">
+        </li>
+    </ul>
 </li>
 `
 
@@ -60,7 +73,7 @@ function SaveSettingCrm() {
         "ShortCutInfoServ": document.getElementById("sc-info").checked,
         "ShortCutCloseDgo": document.getElementById("sc-clsdgo").checked,
         "ShortLimitCharDesc": document.getElementById("sc-limitchar").checked,
-
+        "ShortAlertCTO": document.getElementById('sc-alertcto').checked
     }
     let SaveSetting = {
         "avatar": toChange.TempAvatar,
@@ -70,7 +83,8 @@ function SaveSettingCrm() {
             "findgo": toChange.ShortCutCloseDgo,
             "listTkt": toChange.ShortCutHistorial,
             "serviceinfo": toChange.ShortCutInfoServ,
-            "limitChar": toChange.ShortLimitCharDesc
+            "limitChar": toChange.ShortLimitCharDesc,
+            "alertcto": toChange.ShortAlertCTO
         }
     }
     localStorage.configCRM = JSON.stringify(SaveSetting)
