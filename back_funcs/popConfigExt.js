@@ -44,7 +44,14 @@ document.querySelector(".nav.navbar-nav.navbar-right").innerHTML = `
                         <div class="_sub">
                             <label for="sc-alertcto">Alertar CTO</label>
                             <input type="checkbox" name="sc-alertcto" id="sc-alertcto"${(DataReader.extFunction.alertcto) ? "checked" : ""}>
-
+                        </div>
+                        <div class="_sub">
+                        <label for="sc-syncpext">Sync cto de PEXT(problemas de rendimiento)</label>
+                        <input type="checkbox" name="sc-syncpext" id="sc-syncpext"${(DataReader.extFunction.syncPext) ? "checked" : ""}>
+                    </div>
+                        <div class="_sub">
+                            <label for="sc-slosrojo">Enviar LOS ROJO</label>
+                            <input type="checkbox" name="sc-slosrojo" id="sc-slosrojo"${(DataReader.extFunction.sendLosRojo) ? "checked" : ""}>
                         </div>
                     </div>
                     <div class="item">
@@ -73,7 +80,9 @@ function SaveSettingCrm() {
         "ShortCutInfoServ": document.getElementById("sc-info").checked,
         "ShortCutCloseDgo": document.getElementById("sc-clsdgo").checked,
         "ShortLimitCharDesc": document.getElementById("sc-limitchar").checked,
-        "ShortAlertCTO": document.getElementById('sc-alertcto').checked
+        "ShortAlertCTO": document.getElementById('sc-alertcto').checked,
+        'ShortCutLosRojo': document.getElementById('sc-slosrojo').checked,
+        'ShoetCutSyncPext': document.getElementById('sc-syncpext').checked
     }
     let SaveSetting = {
         "avatar": toChange.TempAvatar,
@@ -84,7 +93,9 @@ function SaveSettingCrm() {
             "listTkt": toChange.ShortCutHistorial,
             "serviceinfo": toChange.ShortCutInfoServ,
             "limitChar": toChange.ShortLimitCharDesc,
-            "alertcto": toChange.ShortAlertCTO
+            "alertcto": toChange.ShortAlertCTO,
+            "sendLosRojo": toChange.ShortCutLosRojo,
+            "syncPext": toChange.ShoetCutSyncPext,
         }
     }
     localStorage.configCRM = JSON.stringify(SaveSetting)

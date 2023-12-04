@@ -1,6 +1,4 @@
 const countdown = (deadline) => {
-    // const el = document.getElementById(elem);
-
     const timerUpdate = setInterval(() => {
         let t = getRemainingTime(deadline);
         localStorage.setItem('StatusGetterPEXT', JSON.stringify({ 'inCooldown': true, 'left': t.remainMinutes, 'nextTo': deadline }))
@@ -22,13 +20,7 @@ const getRemainingTime = deadline => {
         remainHours = ('0' + Math.floor(remainTime / 3600 % 24)).slice(-2),
         remainDays = Math.floor(remainTime / (3600 * 24));
 
-    return {
-        remainSeconds,
-        remainMinutes,
-        remainHours,
-        remainDays,
-        remainTime
-    }
+    return { remainSeconds, remainMinutes, remainHours, remainDays, remainTime }
 };
 const dataWindowLink = [{ ventana: 5, link: "agendados" }, { ventana: 2, link: "asesor_casos" }, { ventana: 3, link: "visitas_lista_casos" }, { ventana: 3, link: "visitas_lista_casos_provincias" }, { ventana: 7, link: "garantia_supervisor" }, { ventana: 12, link: "plantaext" }]
 let niu = document.createElement('ul')
@@ -87,8 +79,8 @@ document.querySelector("#navbar-collapse").appendChild(niu).innerHTML = `
     </ul>
 </li>
 `;
-function loader() {
-    const div = document.querySelector('.extension.content._getcto .resultado');
+function loader(element, text, float = false) {
+    const div = document.querySelector(element);
     div.innerHTML = `<div class="_ext loading"><div class="preloader pl-size-xs">
     <div class="spinner-layer pl-deep-purple">
         <div class="circle-clipper left">
@@ -98,10 +90,9 @@ function loader() {
             <div class="circle"></div>
         </div>
     </div>
-</div> <p>Extrayendo datos...</p></div>`;
+</div> <p>${text}...</p></div>`;
 }
 async function getHTML(idReg) {
-
     let response = await fetch(`ajax/soporte_visita_mostrarinfo.php?cod_id_reg=${idReg}`);
     let html = await response.text();
     let parse = new DOMParser();
@@ -121,7 +112,6 @@ async function getDataTable(ventana = null, mainMotivo = null, idSubArea = null)
     dniUser = document.querySelector("#txt_dni_usuario").value;
     if (ventana === null) {
         const div = document.querySelector('.extension.content._getcto .resultado');
-
         for (const prop in dataWindowLink) {
             if (window.location.pathname.includes(dataWindowLink[prop].link))
                 ventana = dataWindowLink[prop].ventana
@@ -153,6 +143,7 @@ async function getDataTable(ventana = null, mainMotivo = null, idSubArea = null)
 }
 getDataTable()
     .then(reponse => {
+        loader('.extension.content._getcto .resultado', 'cargando contenido')
         console.log(reponse)
         const div = document.querySelector('.extension.content._getcto .resultado');
         const divInterno = document.querySelector('.box-data')
@@ -179,19 +170,10 @@ document.querySelector("#btn_get_cto_data").addEventListener("click", (e) => {
     // const getdataTemp = [];
     const motivo = document.querySelector("#s_data_to").value
     const promises = [];
+    loader('.extension.content._getcto .resultado', 'cargando contenido')
+
     getDataTable().then(data => {
-        const div = document.querySelector('.extension.content._getcto .resultado');
-        div.innerHTML = `<div class="_ext loading"><div class="preloader pl-size-xs">
-    <div class="spinner-layer pl-deep-purple">
-        <div class="circle-clipper left">
-            <div class="circle"></div>
-            </div>
-            <div class="circle-clipper right">
-            <div class="circle"></div>
-            </div>
-            </div>
-            </div> <p>Obteniendo tickets...</p></div>`;
-        data.data.forEach((e) => e.motivo === motivo ? loader() && promises.push(getHTML(e.id_reg)) : "");
+        data.data.forEach((e) => e.motivo === motivo ? promises.push(getHTML(e.id_reg)) : "");
         Promise.all(promises)
             .then(results => {
                 const div = document.querySelector('.extension.content._getcto .resultado');
@@ -240,12 +222,12 @@ document.querySelector("#btn_get_cto_data").addEventListener("click", (e) => {
     })
 })
 function longPoll() {
-    getDataTable(12, 'LOS ROJO', 51)
-        .then(response => {
-            let uwu = JSON.parse(localStorage.StatusGetterPEXT)
-            if (uwu.inCooldown) {
-                console.log('ya esta en progreso en otra pestaña o ya se ejecuto recientemente')
-            } else {
+    let uwu = JSON.parse(localStorage.StatusGetterPEXT)
+    if (uwu.inCooldown) {
+        console.log('ya esta en progreso en otra pestaña o ya se ejecuto recientemente')
+    } else {
+        getDataTable(12, 'LOS ROJO', 51)
+            .then(response => {
                 const fecha = new Date();
                 fecha.setMinutes(fecha.getMinutes() + 5);
                 let temp = countdown(fecha, true)
@@ -270,19 +252,23 @@ function longPoll() {
                         }
                     })
                 // setInterval(longPoll, 250000);
-            }
-        })
-        .catch(error => {
-            // Manejar errores de red
-            console.error(error);
+            })
+            .catch(error => {
+                // Manejar errores de red
+                console.error(error);
 
-            // Esperar 5 segundos antes de realizar otra solicitud
-            // setInterval(longPoll, 250000);
-        });
+                // Esperar 5 segundos antes de realizar otra solicitud
+                // setInterval(longPoll, 250000);
+            });
+    }
     // setTimeout(longPoll, 40000);
 }
 
 if (!window.location.pathname.includes("soporte_plantaext")) {
     // Iniciar la solicitud de Long Polling
-    setInterval(longPoll, 2500)
+
+    if (JSON.parse(localStorage.getItem('configCRM')).extFunction.syncPext) {
+        setInterval(longPoll, 2500)
+    }
+
 }

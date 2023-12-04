@@ -9,31 +9,3 @@ const mostrarONTinfo = () => {
     // ajax/ws_atc_informacion_ont.php
 }
 
-
-/**
- * 
- * @param {*} method 
- * @param {*} url 
- */
-// const CustomRequest = (method = 'POST', url, params) => {
-//     let contendor = document.createElement("div")
-//     contendor.classList.add("responseHtml")
-//     document.body.appendChild(contendor)
-//     const request = new XMLHttpRequest()
-//         .open(method, url)
-//         .setRequestHeader("Charset", "UTF-8")
-//         .setRequestHeader("Content-type", "application/x-www-form-urlencoded")
-//         .send({ data: params })
-//     return request.onreadystatechange(
-//         ev => {this.readyState === 4 ? ev.target.response : ""}
-//     )
-// }
-const CustomRequest = (method = 'POST', url, params, callback) => {
-    let dataResponse = '';
-    const request = new XMLHttpRequest()
-    request.open(method, url)
-    request.setRequestHeader("Charset", "UTF-8")
-    request.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
-    request.send({ data: params })
-    return request.onreadystatechange = callback()
-}

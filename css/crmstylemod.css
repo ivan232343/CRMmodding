@@ -55,20 +55,10 @@ body .custom-cursor-default-hover {
     auto !important;
 }
 
-.body {
-  background: #462f76e3;
-  color: white !important;
-}
-
 /* //remove class in body */
 body {
   background-color: #000000 !important;
   color: white;
-}
-
-.bg-blue {
-  background-color: #3a1a56 !important;
-  color: #fff;
 }
 
 .modal-col-blue {
@@ -76,21 +66,23 @@ body {
   color: white;
 }
 
-.bg-indigo {
-  background-color: #462f76 !important;
-  color: #fff;
-}
 
-.bg-custom {
-  /* background-image: url(https://images.all-free-download.com/images/graphiclarge/vintage_black_pattern_241388.jpg); */
-  color: #fff;
-  /* background-attachment: fixed; */
-  /* background-blend-mode: exclusion; */
-  background-color: rgb(70, 47, 118) !important;
+.bg-blue p.name {
+  width: 40rem;
 }
-
-.bg-custom>* {
-  color: rgb(255, 255, 255) !important;
+.table tbody tr td, .table tbody tr th{
+  border-top: unset !important;
+  border-bottom: unset !important;
+}
+tr.template-download.fade.in {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-around;
+  border-bottom: solid 1px white;
+}
+table.table {
+  margin: 0;
+  border: 0;
 }
 
 button.btn.waves-effect {
@@ -345,4 +337,27 @@ div#div_ajax_tabla_file_subidos .body.table-responsive {
     gap: 0.55rem;
     grid-template-columns: 1fr 1fr;
   }
+}
+ .panel-default > .panel-heading {
+  color: black !important;
+}
+#accordion_9 > div a, #collapseOne_1 > * div {
+  color: white;
+}
+
+
+/* navidad event */
+form#form_caso_cierre {
+  background-image: url(https://1.bp.blogspot.com/-gs_3Ifcfd20/WFaSOhCrkdI/AAAAAAAGigU/3mwZXXbf47oG4pjUb9AL47bmtSGwuSk7wCLcB/s1600/animated-white-snow-flakes-falling.gif);
+}
+body.theme-red {
+  height: 100vh;
+  background-image: url(https://1.bp.blogspot.com/-gs_3Ifcfd20/WFaSOhCrkdI/AAAAAAAGigU/3mwZXXbf47oG4pjUb9AL47bmtSGwuSk7wCLcB/s1600/animated-white-snow-flakes-falling.gif);
+  background-position: center;
+}
+aside#leftsidebar {
+  background: transparent;
+}
+.menu {
+  background: transparent;
 }
