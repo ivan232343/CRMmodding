@@ -1,0 +1,10 @@
+{
+    "extensionName": {
+        "message": "modificador de WIN CRM",
+        "description": "Name of the extension."
+    },
+    "extensionDescription": {
+        "message": "Modifica el sistema CRM de WIN agregando colores y agregando herramientas y mejoras",
+        "description": "Description of the extension."
+    }
+}

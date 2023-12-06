@@ -1,0 +1,10 @@
+{
+    "extensionName": {
+        "message": "WIN CRM modding",
+        "description": "Name of the extension."
+    },
+    "extensionDescription": {
+        "message": "Modify WIN CRM system by adding colors, tools and enhancements.",
+        "description": "Description of the extension."
+    }
+}
