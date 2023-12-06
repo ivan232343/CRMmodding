@@ -313,7 +313,9 @@ select#s_data_to {
     }
   }
 }
-
+.panel-body > div tbody tr:hover {
+  color: black;
+}
 ._ext.loading {
   display: flex;
   align-items: flex-end;
@@ -345,14 +347,18 @@ div#div_ajax_tabla_file_subidos .body.table-responsive {
   color: white;
 }
 
-
+.login-page .login-box .msg, .login-page .login-box > div span i {
+  color: white !important;
+}
+.theme-deep-orange .navbar {
+  background-color: #48268d;
+}
 /* navidad event */
 form#form_caso_cierre {
   background-image: url(https://1.bp.blogspot.com/-gs_3Ifcfd20/WFaSOhCrkdI/AAAAAAAGigU/3mwZXXbf47oG4pjUb9AL47bmtSGwuSk7wCLcB/s1600/animated-white-snow-flakes-falling.gif);
 }
 body.theme-red {
   height: 100vh;
-  background-image: url(https://1.bp.blogspot.com/-gs_3Ifcfd20/WFaSOhCrkdI/AAAAAAAGigU/3mwZXXbf47oG4pjUb9AL47bmtSGwuSk7wCLcB/s1600/animated-white-snow-flakes-falling.gif);
   background-position: center;
 }
 aside#leftsidebar {
