@@ -1,4 +1,14 @@
-const ValidatePath = (path, subdir = false) => document.location.pathname === `/pages/${subdir !== false ? 'ajax/' : ''}${path}.php` ? true : false
+const ValidatePath = (path, subdir = false, args) => {
+    if (typeof path === 'string') {
+        return document.location.pathname === `/pages/${subdir !== false ? 'ajax/' : ''}${path}.php` ? true : false
+    } else {
+        let booleanArray = []
+        for (let i = 0; i < path.length; i++) {
+            document.location.pathname === `/pages/${subdir !== false ? 'ajax/' : ''}${path[i]}.php` ? booleanArray.push(true) : booleanArray.push(false)
+        }
+        return booleanArray
+    }
+}
 if (localStorage.getItem("configCRM") !== null) {
     localStorage.getItem("configCRM")
 } else {
@@ -34,24 +44,15 @@ letter.childNodes.forEach(e => {
 });
 
 
-window.onload = () => {
-    if (!ValidatePath('index.php') || !ValidatePath('atc_registro_llamadas')) {
-        document.getElementById("txt_busca").addEventListener("input", e => e.target.value = e.target.value.replaceAll(/[a-zA-Z]+-/g, ""))
-        // inicializar el div del modal 
-        let mdlCustom = document.querySelector('#mdModal')
-        let initDiv = document.createElement('div')
-        initDiv.id = "init-ext";
-        mdlCustom.appendChild(initDiv)
-    };
-
-}
-if (ValidatePath("atc_registro_llamada_busca_cliente_cel") || !ValidatePath('soporte_masivos_supervisor')) {
-    let basicStyles = document.body.style
-    basicStyles.margin = "auto";
-    basicStyles.fontFamily = "serif system-ui";
-    basicStyles.fontSize = "1.25rem"
-
-}
+let validateAppendModal = ValidatePath(['index', 'atc_registro_llamadas'])
+if (validateAppendModal[0] || !validateAppendModal[1]) {
+    document.getElementById("txt_busca").addEventListener("input", e => e.target.value = e.target.value.replaceAll(/[a-zA-Z]+-/g, ""))
+    // inicializar el div del modal 
+    let mdlCustom = document.querySelector('#mdModal')
+    let initDiv = document.createElement('div')
+    initDiv.id = "init-ext";
+    mdlCustom.appendChild(initDiv)
+};
 if (!ValidatePath("atc_registro_llamadas")) {
     document.querySelector("#tablaCasos tbody").addEventListener("click", (ev) => {
         if (ev.target.localName !== 'td') {
@@ -62,9 +63,20 @@ if (!ValidatePath("atc_registro_llamadas")) {
                 element = ev.target.parentElement.parentElement
             }
             // console.log(element)
-            element = element.querySelectorAll('td')[4].innerText.replace(/[a-zA-Z]+-/g, "")
+            element = element.querySelectorAll('td')[4].innerText.replace(/[a-zA-Z-]+/g, "")
             InitFunction(element)
 
+        } else {
+            let text = ev.target.innerText
+            let tempCopy = document.createElement('textarea')
+            tempCopy.innerHTML = text;
+            document.body.appendChild(tempCopy)
+            tempCopy.focus();
+            tempCopy.select();
+            document.execCommand('copy')
+            tempCopy.innerHTML = '';
+            tempCopy.style.display = 'none'
+            console.log(ev, text)
         }
     })
 }
