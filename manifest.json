@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "version": "6.3.1",
+  "version": "6.5",
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
   "default_locale": "es",
@@ -16,6 +16,8 @@
         "http://172.27.201.14/pages/*"
       ],
       "js": [
+        "back_funcs/typeusers.js",
+        "back_funcs/init_functions.js",
         "back_funcs/popConfigExt.js",
         "back_funcs/popGetCTO.js",
         "back_funcs/forceStyles.js",
@@ -26,7 +28,8 @@
         "module/llenadoSelect.js"
       ],
       "css": [
-        "css/crmstylemod.css"
+        "css/crmstylemod.css",
+        "css/theme-personal.css"
       ]
     }
   ]

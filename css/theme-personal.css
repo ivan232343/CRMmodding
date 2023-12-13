@@ -1,0 +1,58 @@
+.navbar-header a {
+    color: #804bee !important;
+    text-decoration: none;
+  }
+  .ext_.content {
+    background-color: rgb(8, 161, 54);
+    & .ext_ {
+      color: #fcfcfc;
+      background-color: #462f76 !important;
+    }
+}
+.list-group-item:nth-child(odd) > .row {
+    background: #058fff !important;
+  }
+  
+  .list-group-item:nth-child(even) > .row {
+    background: black;
+    color: white;
+  }
+
+  a.toggled.waves-effect,
+a.waves-effect.waves-block:hover,
+a.waves-effect.waves-block:hover > * {
+  color: rgb(117, 60, 255) !important;
+}
+.panel {
+    border-color: #8d00e5 !important;
+    background-color: black !important;
+    color: white;
+    &.panel-primary {
+      & > .panel-heading {
+        color: #fff;
+        background-color: #6c33b7;
+        border-color: #6c33b7;
+      }
+    }
+  }
+  .theme-deep-orange .navbar {
+    background-color: #48268d;
+  }
+  /* navidad event */
+  form#form_caso_cierre {
+    background-image: url(https://1.bp.blogspot.com/-gs_3Ifcfd20/WFaSOhCrkdI/AAAAAAAGigU/3mwZXXbf47oG4pjUb9AL47bmtSGwuSk7wCLcB/s1600/animated-white-snow-flakes-falling.gif);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+  body.theme-red {
+    height: 100vh;
+    background-position: center;
+  }
+  aside#leftsidebar {
+    background: transparent;
+  }
+  .menu {
+    background: transparent;
+  }
+  

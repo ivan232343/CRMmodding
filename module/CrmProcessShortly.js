@@ -15,7 +15,8 @@ const CrmProcessShortly = (type = 1) => {
         document.querySelector("#div_agendamiento").style.display = 'none'
     } else if (type === 3) {
         // envio visita por masivo pext
-        descripcion = desc.value !== "" ? desc.value : "se valida masivo "
+        let descTemp = desc.value
+        descripcion = `${desc.value !== "" ? descTemp : "se valida masivo"}`
         llenadoSelect(34, ['207', 'Visita tecnica Externa'], ['1707', 'Los rojo'])
         document.querySelector("#div_agendamiento").style.display = 'none'
     }

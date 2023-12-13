@@ -1,5 +1,7 @@
-let DataReader = JSON.parse(localStorage.configCRM)
-document.querySelector(".nav.navbar-nav.navbar-right").innerHTML = `
+
+if (!ValidatePath('index')) {
+    let DataReader = JSON.parse(localStorage.configCRM)
+    document.querySelector(".nav.navbar-nav.navbar-right").innerHTML = `
 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" style="margin-top:8px;" role="button">
         <i class="material-icons">settings</i>
         <span class="label-count"><span class="count"></span></span>
@@ -71,47 +73,48 @@ document.querySelector(".nav.navbar-nav.navbar-right").innerHTML = `
 </li>
 `
 
-function SaveSettingCrm() {
-    let toChange = {
-        "TempAvatar": document.getElementById("avatar_custom").value,
-        "TempBanner": document.getElementById("banner_custom").value,
-        "ShortCutAgendar": document.getElementById("sc-ag").checked,
-        "ShortCutHistorial": document.getElementById("sc-hist").checked,
-        "ShortCutInfoServ": document.getElementById("sc-info").checked,
-        "ShortCutCloseDgo": document.getElementById("sc-clsdgo").checked,
-        "ShortLimitCharDesc": document.getElementById("sc-limitchar").checked,
-        "ShortAlertCTO": document.getElementById('sc-alertcto').checked,
-        'ShortCutLosRojo': document.getElementById('sc-slosrojo').checked,
-        'ShoetCutSyncPext': document.getElementById('sc-syncpext').checked
-    }
-    let SaveSetting = {
-        "avatar": toChange.TempAvatar,
-        "background": toChange.TempBanner,
-        "extFunction": {
-            "agendar": toChange.ShortCutAgendar,
-            "findgo": toChange.ShortCutCloseDgo,
-            "listTkt": toChange.ShortCutHistorial,
-            "serviceinfo": toChange.ShortCutInfoServ,
-            "limitChar": toChange.ShortLimitCharDesc,
-            "alertcto": toChange.ShortAlertCTO,
-            "sendLosRojo": toChange.ShortCutLosRojo,
-            "syncPext": toChange.ShoetCutSyncPext,
+    function SaveSettingCrm() {
+        let toChange = {
+            "TempAvatar": document.getElementById("avatar_custom").value,
+            "TempBanner": document.getElementById("banner_custom").value,
+            "ShortCutAgendar": document.getElementById("sc-ag").checked,
+            "ShortCutHistorial": document.getElementById("sc-hist").checked,
+            "ShortCutInfoServ": document.getElementById("sc-info").checked,
+            "ShortCutCloseDgo": document.getElementById("sc-clsdgo").checked,
+            "ShortLimitCharDesc": document.getElementById("sc-limitchar").checked,
+            "ShortAlertCTO": document.getElementById('sc-alertcto').checked,
+            'ShortCutLosRojo': document.getElementById('sc-slosrojo').checked,
+            'ShoetCutSyncPext': document.getElementById('sc-syncpext').checked
         }
+        let SaveSetting = {
+            "avatar": toChange.TempAvatar,
+            "background": toChange.TempBanner,
+            "extFunction": {
+                "agendar": toChange.ShortCutAgendar,
+                "findgo": toChange.ShortCutCloseDgo,
+                "listTkt": toChange.ShortCutHistorial,
+                "serviceinfo": toChange.ShortCutInfoServ,
+                "limitChar": toChange.ShortLimitCharDesc,
+                "alertcto": toChange.ShortAlertCTO,
+                "sendLosRojo": toChange.ShortCutLosRojo,
+                "syncPext": toChange.ShoetCutSyncPext,
+            }
+        }
+        localStorage.configCRM = JSON.stringify(SaveSetting)
     }
-    localStorage.configCRM = JSON.stringify(SaveSetting)
+    let banner = document.getElementById("banner_custom")
+    let avatar = document.getElementById("avatar_custom")
+    avatar.addEventListener("input", (e) => {
+        document.querySelector(".user-info .image img").src = e.target.value
+        SaveSettingCrm();
+    })
+    banner.addEventListener("input", (e) => {
+        document.querySelector(".user-info").style.backgroundImage = `url(${e.target.value})`
+        SaveSettingCrm();
+    })
+    avatar.addEventListener("click", (e) => e.target.select())
+    banner.addEventListener("click", (e) => e.target.select())
+    document.querySelectorAll(".item [type=checkbox]").forEach((e) => {
+        e.addEventListener("change", () => SaveSettingCrm())
+    })
 }
-let banner = document.getElementById("banner_custom")
-let avatar = document.getElementById("avatar_custom")
-avatar.addEventListener("input", (e) => {
-    document.querySelector(".user-info .image img").src = e.target.value
-    SaveSettingCrm();
-})
-banner.addEventListener("input", (e) => {
-    document.querySelector(".user-info").style.backgroundImage = `url(${e.target.value})`
-    SaveSettingCrm();
-})
-avatar.addEventListener("click", (e) => e.target.select())
-banner.addEventListener("click", (e) => e.target.select())
-document.querySelectorAll(".item [type=checkbox]").forEach((e) => {
-    e.addEventListener("change", () => SaveSettingCrm())
-})

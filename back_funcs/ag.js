@@ -1,14 +1,4 @@
-const ValidatePath = (path, subdir = false, args) => {
-    if (typeof path === 'string') {
-        return document.location.pathname === `/pages/${subdir !== false ? 'ajax/' : ''}${path}.php` ? true : false
-    } else {
-        let booleanArray = []
-        for (let i = 0; i < path.length; i++) {
-            document.location.pathname === `/pages/${subdir !== false ? 'ajax/' : ''}${path[i]}.php` ? booleanArray.push(true) : booleanArray.push(false)
-        }
-        return booleanArray
-    }
-}
+
 if (localStorage.getItem("configCRM") !== null) {
     localStorage.getItem("configCRM")
 } else {
@@ -43,17 +33,16 @@ letter.childNodes.forEach(e => {
     }
 });
 
-
-let validateAppendModal = ValidatePath(['index', 'atc_registro_llamadas'])
-if (validateAppendModal[0] || !validateAppendModal[1]) {
+if (!validateAppendModal.some(path => path)) {
+    let tempCopy = document.createElement('textarea')
+    document.body.appendChild(tempCopy)
+    tempCopy.style.display = 'none';
     document.getElementById("txt_busca").addEventListener("input", e => e.target.value = e.target.value.replaceAll(/[a-zA-Z]+-/g, ""))
     // inicializar el div del modal 
     let mdlCustom = document.querySelector('#mdModal')
     let initDiv = document.createElement('div')
     initDiv.id = "init-ext";
     mdlCustom.appendChild(initDiv)
-};
-if (!ValidatePath("atc_registro_llamadas")) {
     document.querySelector("#tablaCasos tbody").addEventListener("click", (ev) => {
         if (ev.target.localName !== 'td') {
             let element = '';
@@ -68,18 +57,18 @@ if (!ValidatePath("atc_registro_llamadas")) {
 
         } else {
             let text = ev.target.innerText
-            let tempCopy = document.createElement('textarea')
             tempCopy.innerHTML = text;
-            document.body.appendChild(tempCopy)
+            tempCopy.style.display = 'block'
             tempCopy.focus();
             tempCopy.select();
             document.execCommand('copy')
             tempCopy.innerHTML = '';
             tempCopy.style.display = 'none'
-            console.log(ev, text)
+            // console.log(ev, text)
         }
     })
-}
+
+};
 // ----------
 
 document.querySelectorAll(".dropdown-menu").forEach((e) => e.addEventListener('click', (ev) => ev.stopPropagation()))
@@ -90,14 +79,14 @@ const limitchar = (turn) => {
         inputToLimit.addEventListener('input', (ev) => {
             labelToMod.innerText = `Ingrese sus observaciones: caracteres ${ev.target.value.length} / 367`
             if (ev.target.value.length < 367) {
-                console.log("sigue escribiendo");
+                // console.log("sigue escribiendo");
             } else {
                 let dividoEn = (ev.target.value.length / 367) + 1
                 let saveTempDesc = inputToLimit.value.match(/.{1,367}/g)
                 labelToMod.innerText = `Ingrese sus observaciones: caracteres: ${ev.target.value.length}/367 \t veces que debe ser partido: ${dividoEn.toFixed()}`
 
-                console.log("cuidado estas al limite");
-                console.log(saveTempDesc);
+                // console.log("cuidado estas al limite");
+                // console.log(saveTempDesc);
             }
         })
     } else {
@@ -107,7 +96,7 @@ const limitchar = (turn) => {
 const copyTextTable = () => {
     document.querySelectorAll('.text-center').forEach((e) => {
         e.addEventListener('click', (ev) => {
-            console.log(ev.target.textContent.split(' ').join('\t'))
+            // console.log(ev.target.textContent.split(' ').join('\t'))
             var content = document.getElementById('txt_descripcion_caso');
             content.innerHTML = ev.target.textContent.split(' ').join('\t');
             content.focus();
@@ -125,5 +114,5 @@ if (localStorage.getItem('StatusGetterPEXT') === null) {
         let onMemory = new Date(getter.nextTo)
         countdown(onMemory)
     }
-    else { console.log('no esta') }
+    // else { console.log('no esta') }
 }
