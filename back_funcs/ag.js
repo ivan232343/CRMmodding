@@ -34,6 +34,7 @@ letter.childNodes.forEach(e => {
 });
 
 if (!validateAppendModal.some(path => path)) {
+    document.forms.form_audio_adjunto.querySelector('#uploadedFile').setAttribute('multiple', 'true')
     let tempCopy = document.createElement('textarea')
     document.body.appendChild(tempCopy)
     tempCopy.style.display = 'none';
@@ -112,7 +113,57 @@ if (localStorage.getItem('StatusGetterPEXT') === null) {
     let getter = JSON.parse(localStorage.getItem('StatusGetterPEXT'))
     if (getter.nextTo) {
         let onMemory = new Date(getter.nextTo)
-        countdown(onMemory)
+        countdown(onMemory, (d, t) => {
+            if (t === undefined) {
+                console.log(d, e)
+                localStorage.setItem('StatusGetterPEXT', JSON.stringify({ 'inCooldown': true, 'left': d.remainMinutes, 'nextTo': deadline }))
+            } else {
+                localStorage.setItem('StatusGetterPEXT', JSON.stringify({ 'InProgress': false, 'left': 0 }))
+                clearInterval(t)
+            }
+            // Falta ${d.remainDays} dias, ${d.remainHours} horas, ${d.remainMinutes} minutos, ${d.remainSeconds} 
+        })
     }
     // else { console.log('no esta') }
 }
+document.querySelector('.sidebar .legal .copyright').innerText = `Extension desarrollada por Ivan Pulache :D, \t enjoy!`
+
+
+async function uploadFile(entity) {
+    console.log(entity)
+    const midata = new FormData();
+    const formArea = document.forms.form_audio_adjunto;
+    let dniAsesor = document.getElementById('txt_dni_asesor').value;
+    let dniCliente = document.getElementById('txt_dni_cliente').value;
+    let idContrato = document.getElementById('txt_id_reg').value;
+    let fuente = 'AT';
+    let txt_id_area_sub_det3 = document.getElementById('txt_id_area_sub_det').value;
+    let opcion1 = '';
+    let opcion2 = '';
+    let opcion3 = '';
+    let toUpload = formArea.uploadedFile.files;
+    midata.append('dni_asesor', dniAsesor);
+    midata.append('dni_cliente', dniCliente);
+    midata.append('id_venta', idContrato);
+    midata.append('origen', fuente);
+    midata.append('txt_id_area_sub_det', txt_id_area_sub_det3);
+    midata.append('opcion1', opcion1);
+    midata.append('opcion2', opcion2);
+    midata.append('opcion3', opcion3);
+    for (let i = 0; i < toUpload.length; i++) {
+        midata.append('uploadedFile', toUpload[i]);
+        await fetch('ajax/adjuntos-subir.php', {
+            method: "POST",
+            body: midata,
+            RequestCache: false,
+        })
+            .then(res => res)
+            .catch(error => console.error('Error:', error))
+            .then(res => console.log('success: ', res));
+    }
+    formArea.reset();
+    await fetch(`ajax/adjuntos-mostrar.php?id_contrato=${idContrato}&color=bg-blue&opcion1=0&opcion2=0`)
+        .then(res => res.text())
+        .then(response => document.getElementById("div_ajax_tabla_file_subidos").innerHTML = response);
+}
+
