@@ -19,6 +19,12 @@ const CrmProcessShortly = (type = 1) => {
         descripcion = `${desc.value !== "" ? descTemp : "se valida masivo"}`
         llenadoSelect(34, ['207', 'Visita tecnica Externa'], ['1707', 'Los rojo'])
         document.querySelector("#div_agendamiento").style.display = 'none'
+    } else if (type === 4) {
+        // envio visita por masivo pext
+        let descTemp = desc.value
+        descripcion = `${desc.value !== "" ? descTemp : "se valida masivo solventado y servicio activo se procede con el cierre del ticket  "}`
+        llenadoSelect(32, ['202', 'Problemas con el servicio'], ['407', 'Internet - Luz LOS en rojo'])
+        document.querySelector("#div_agendamiento").style.display = 'none'
     }
     desc.value = descripcion;
     if (document.getElementById("bt_guardar") !== null) {

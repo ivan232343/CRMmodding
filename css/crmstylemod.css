@@ -92,6 +92,9 @@ button.btn.waves-effect {
 .ext_.content {
   & .ext_ {
     margin: 1rem 0.5rem;
+    max-width: 14rem;
+    text-align: center;
+    text-wrap: pretty;
   }
   position: fixed;
   display: flex;
@@ -326,4 +329,11 @@ div#div_ajax_tabla_file_subidos .body.table-responsive {
 .login-page .login-box .msg,
 .login-page .login-box > div span i {
   color: white !important;
+}
+
+p._ext.navidad {
+  color: white;
+  font-size: 1.7rem;
+  margin: auto;
+  padding: 2rem;
 }

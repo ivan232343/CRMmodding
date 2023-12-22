@@ -27,6 +27,10 @@ if (!ValidatePath('index')) {
                             <input type="checkbox" name="sc-ag" id="sc-ag" ${(DataReader.extFunction.agendar) ? "checked" : ""}>
                         </div>
                         <div class="_sub">
+                        <label for="sc-multiupload">Multi Upload image</label>
+                        <input type="checkbox" name="sc-multiupload" id="sc-multiupload" ${(DataReader.extFunction.multiupload) ? "checked" : ""}>
+                    </div>
+                        <div class="_sub">
                             <label for="sc-hist">Historial</label>
                             <input type="checkbox" name="sc-hist" id="sc-hist" ${(DataReader.extFunction.listTkt) ? "checked" : ""}>
                         </div>
@@ -55,6 +59,10 @@ if (!ValidatePath('index')) {
                             <label for="sc-slosrojo">Enviar LOS ROJO</label>
                             <input type="checkbox" name="sc-slosrojo" id="sc-slosrojo"${(DataReader.extFunction.sendLosRojo) ? "checked" : ""}>
                         </div>
+                        <div class="_sub">
+                        <label for="sc-closelosrojo">Cerrar tkt LOS ROJO</label>
+                        <input type="checkbox" name="sc-closelosrojo" id="sc-closelosrojo"${(DataReader.extFunction.sendLosRojo) ? "checked" : ""}>
+                    </div>
                     </div>
                     <div class="item">
                         <h3>AT-DGO</h3>
@@ -79,12 +87,14 @@ if (!ValidatePath('index')) {
             "TempBanner": document.getElementById("banner_custom").value,
             "ShortCutAgendar": document.getElementById("sc-ag").checked,
             "ShortCutHistorial": document.getElementById("sc-hist").checked,
+            "MultiUploadSend": document.getElementById("sc-multiupload").checked,
             "ShortCutInfoServ": document.getElementById("sc-info").checked,
             "ShortCutCloseDgo": document.getElementById("sc-clsdgo").checked,
             "ShortLimitCharDesc": document.getElementById("sc-limitchar").checked,
             "ShortAlertCTO": document.getElementById('sc-alertcto').checked,
             'ShortCutLosRojo': document.getElementById('sc-slosrojo').checked,
-            'ShoetCutSyncPext': document.getElementById('sc-syncpext').checked
+            'ShoetCutSyncPext': document.getElementById('sc-syncpext').checked,
+            'ShortCutCloseLosRojo': document.getElementById('sc-closelosrojo').checked
         }
         let SaveSetting = {
             "avatar": toChange.TempAvatar,
@@ -98,6 +108,8 @@ if (!ValidatePath('index')) {
                 "alertcto": toChange.ShortAlertCTO,
                 "sendLosRojo": toChange.ShortCutLosRojo,
                 "syncPext": toChange.ShoetCutSyncPext,
+                "finlosrojo": toChange.ShortCutCloseLosRojo,
+                "multiupload": toChange.MultiUploadSend
             }
         }
         localStorage.configCRM = JSON.stringify(SaveSetting)
