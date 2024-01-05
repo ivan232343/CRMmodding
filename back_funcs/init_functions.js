@@ -9,7 +9,7 @@ const ValidatePath = (path, subdir = false, args) => {
         return booleanArray
     }
 }
-let validateAppendModal = ValidatePath(['index', 'atc_registro_llamadas'])
+let validateAppendModal = ValidatePath(['index', 'atc_registro_llamadas', 'login_form'])
 function getUriFetch(windows) {
     const buildUri = (windows === 2 || windows === 7 || windows === 12) ? "asesor_casos_lista" : (windows === 5) ? 'asesor_agendados_lista2' : (windows === 3) ? 'visitas_lista_casos2_lista' : 'no_data'
     return buildUri;
@@ -46,6 +46,29 @@ countdown('Mon Dec 18 2023 19:38:00 GMT-0500 (hora estándar de Perú)', (d, e) 
         clearInterval(e)
     }
 })
+
+// fast login
+async function fastLogin(dniAsesor, goto) {
+    const url = 'http://172.27.201.14/pages/login_check.php';
+    const data = new FormData();
+    data.append('username', dniAsesor);
+    data.append('password', dniAsesor);
+
+    fetch(url, {
+        method: 'POST',
+        body: data
+    })
+        .then(response => {
+            if (response.ok) {
+                window.location.href = `http://172.27.201.14/pages/${goto}.php`
+            } else {
+                throw new Error('Error al iniciar sesión.');
+            }
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
 
 // // navidad
 // let niu = document.createElement('ul')

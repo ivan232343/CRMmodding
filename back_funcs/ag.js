@@ -7,31 +7,42 @@ if (localStorage.getItem("configCRM") !== null) {
         "background": "http://172.27.201.14/images/user-img-background.jpg",
         "extFunction": {
             "agendar": true,
-            "listTkt": true,
-            "serviceinfo": true,
             "findgo": false,
-            "limitChar": true,
-            "alertcto": true
+            "listTkt": true,
+            "serviceinfo": false,
+            "limitChar": false,
+            "alertcto": false,
+            "sendLosRojo": true,
+            "syncPext": false,
+            "finlosrojo": true,
+            "multiupload": true,
+            "prueba": true
         }
     }
+
+
     localStorage.setItem("configCRM", JSON.stringify(initalConfiguration))
 }
-const configSaved = JSON.parse(localStorage.configCRM)
-document.querySelector(".image img").src = configSaved.avatar;
-let fondo = document.querySelector(".user-info");
-fondo.style.backgroundImage = `url(${configSaved.background})`;
-fondo.style.backgroundSize = "cover";
-fondo.style.backgroundRepeat = "no-repeat";
-fondo.style.backgroundPosition = "center";
-fondo.style.backgroundOrigin = "content-box";
-let letter = document.querySelector(".info-container");
-letter.childNodes.forEach(e => {
-    if (e.nodeName !== "#text") {
-        e.style.color = "white";
-        e.style.textShadow = " 1px 0px 0px black, 0px 1px 0px black, -1px 0px 0px black, 0px -1px 0px black";
-        e.style.fontWeight = "bolder";
-    }
-});
+// ui_settings('settings').then(r => console.log(r.body))
+if (!ValidatePath('login_form')) {
+    const configSaved = JSON.parse(localStorage.configCRM)
+    document.querySelector(".image img").src = configSaved.avatar;
+    let fondo = document.querySelector(".user-info");
+    fondo.style.backgroundImage = `url(${configSaved.background})`;
+    fondo.style.backgroundSize = "cover";
+    fondo.style.backgroundRepeat = "no-repeat";
+    fondo.style.backgroundPosition = "center";
+    fondo.style.backgroundOrigin = "content-box";
+    let letter = document.querySelector(".info-container");
+    letter.childNodes.forEach(e => {
+        if (e.nodeName !== "#text") {
+            e.style.color = "white";
+            e.style.textShadow = " 1px 0px 0px black, 0px 1px 0px black, -1px 0px 0px black, 0px -1px 0px black";
+            e.style.fontWeight = "bolder";
+        }
+    });
+    document.querySelector('.sidebar .legal .copyright').innerText = `Extension desarrollada por Ivan Pulache :D, \t enjoy!`
+}
 
 if (!validateAppendModal.some(path => path)) {
     document.forms.form_audio_adjunto.querySelector('#uploadedFile').setAttribute('multiple', 'true')
@@ -126,7 +137,6 @@ if (localStorage.getItem('StatusGetterPEXT') === null) {
     }
     // else { console.log('no esta') }
 }
-document.querySelector('.sidebar .legal .copyright').innerText = `Extension desarrollada por Ivan Pulache :D, \t enjoy!`
 
 
 async function uploadFile(entity) {
