@@ -16,3 +16,70 @@ body.theme-default {
     }
   }
 }
+.page-loader-wrapper {
+  background: #000 !important;
+
+  & p {
+    color: white !important;
+  }
+}
+
+body {
+  background-color: #000000 !important;
+  color: white;
+}
+
+.modal-col-blue {
+  background-color: #161616 !important;
+  color: white;
+}
+
+tr.template-download.fade.in {
+  border-bottom: solid 1px white;
+}
+tr.even {
+  background-color: #314151 !important;
+  color: white;
+}
+
+tr.odd {
+  background-color: black !important;
+  color: white;
+}
+.menu {
+  background: black;
+  color: white;
+}
+
+select#s_data_to,.panel-body > div tbody tr:hover {
+  color: black;
+}
+._sub, .box, ._box h3,#accordion_9 > div a,
+#collapseOne_1 > * div ,.extension{
+  color: white;
+}
+.main_box li.body,.contenido_extension_agendados {
+  background: black;
+}
+.panel-default > .panel-heading {
+  color: black !important;
+}
+.login-page .login-box .msg,
+.login-page .login-box > div span i {
+  color: white !important;
+}
+ul.ml-menu > li a,
+a.waves-effect.waves-block > * {
+  color: white !important;
+}
+.navbar-header a {
+  color: #804bee !important;
+  text-decoration: none;
+}
+.ext_.content {
+  background-color: rgb(8, 161, 54);
+  & .ext_ {
+    color: #fcfcfc;
+    background-color: #462f76 !important;
+  }
+}

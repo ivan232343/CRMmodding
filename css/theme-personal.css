@@ -1,13 +1,6 @@
-.navbar-header a {
-    color: #804bee !important;
-    text-decoration: none;
-  }
-  .ext_.content {
-    background-color: rgb(8, 161, 54);
-    & .ext_ {
-      color: #fcfcfc;
-      background-color: #462f76 !important;
-    }
+
+.menu > div li.header {
+  background-color: #541bc1 !important;
 }
 .list-group-item:nth-child(odd) > .row {
     background: #058fff !important;
