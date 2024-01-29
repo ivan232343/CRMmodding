@@ -1,14 +1,19 @@
 body.theme-default {
+  overflow: hidden;
+
   & nav {
     &.navbar {
       background-color: black;
     }
   }
+
   & section {
     & .menu {
       background-color: black;
-      & ul > li ~ li {
+
+      & ul>li~li {
         color: white;
+
         &:hover {
           color: #a84cfd !important;
         }
@@ -16,6 +21,7 @@ body.theme-default {
     }
   }
 }
+
 .page-loader-wrapper {
   background: #000 !important;
 
@@ -37,6 +43,7 @@ body {
 tr.template-download.fade.in {
   border-bottom: solid 1px white;
 }
+
 tr.even {
   background-color: #314151 !important;
   color: white;
@@ -46,40 +53,83 @@ tr.odd {
   background-color: black !important;
   color: white;
 }
+
 .menu {
   background: black;
   color: white;
 }
 
-select#s_data_to,.panel-body > div tbody tr:hover {
+select#s_data_to,
+.panel-body>div tbody tr:hover {
   color: black;
 }
-._sub, .box, ._box h3,#accordion_9 > div a,
-#collapseOne_1 > * div ,.extension{
+
+._sub,
+.box,
+._box h3,
+#accordion_9>div a,
+#collapseOne_1>* div,
+.extension {
   color: white;
 }
-.main_box li.body,.contenido_extension_agendados {
+
+.main_box li.body,
+.contenido_extension_agendados {
   background: black;
 }
-.panel-default > .panel-heading {
+
+.panel-default>.panel-heading {
   color: black !important;
 }
+
 .login-page .login-box .msg,
-.login-page .login-box > div span i {
+.login-page .login-box>div span i {
   color: white !important;
 }
-ul.ml-menu > li a,
-a.waves-effect.waves-block > * {
+
+ul.ml-menu>li a,
+a.waves-effect.waves-block>* {
   color: white !important;
 }
+
 .navbar-header a {
-  color: #804bee !important;
+  /* color: #804bee !important; */
   text-decoration: none;
 }
-.ext_.content {
-  background-color: rgb(8, 161, 54);
-  & .ext_ {
-    color: #fcfcfc;
-    background-color: #462f76 !important;
-  }
+
+
+
+div#collapseOne_1.panel-collapse.in,
+div#collapseOne_1.panel-collapse.collapsing {
+  overflow: auto !important;
+  height: 37rem !important;
+}
+
+a.list-group-item:hover,
+button.list-group-item:hover,
+a.list-group-item:focus,
+button.list-group-item:focus {
+  background-color: transparent !important;
+}
+
+#form1 .form-group .panel-body.overflow-panel,
+#form1 .outer_div .panel-body.overflow-panel {
+  overflow: hidden !important;
+  background-color: transparent !important;
+}
+
+#form1 .outer_div>.panel-heading {
+  background-color: transparent !important;
+}
+
+a.list-group-item {
+  padding: 0.5rem;
+  margin-bottom: 0 !important;
+  background-color: unset;
+  border: unset;
+}
+
+.login-box>.card .footer .status {
+  background-color: #5a4585;
+  color: white;
 }

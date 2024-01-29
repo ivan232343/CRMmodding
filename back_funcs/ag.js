@@ -3,8 +3,8 @@ if (localStorage.getItem("configCRM") !== null) {
     localStorage.getItem("configCRM")
 } else {
     let initalConfiguration = {
-        "avatar": "http://172.27.201.14/images/user.png",
-        "background": "http://172.27.201.14/images/user-img-background.jpg",
+        "avatar": "images/user.png",
+        "background": "images/user-img-background.jpg",
         "extFunction": {
             "agendar": true,
             "findgo": false,
@@ -12,9 +12,9 @@ if (localStorage.getItem("configCRM") !== null) {
             "serviceinfo": false,
             "limitChar": false,
             "alertcto": false,
-            "sendLosRojo": true,
+            "sendLosRojo": false,
             "syncPext": false,
-            "finlosrojo": true,
+            "finlosrojo": false,
             "multiupload": true,
             "prueba": true
         }
@@ -64,8 +64,9 @@ if (!validateAppendModal.some(path => path)) {
                 element = ev.target.parentElement.parentElement
             }
             // console.log(element)
-            element = element.querySelectorAll('td')[4].innerText.replace(/[a-zA-Z-]+/g, "")
-            InitFunction(element)
+            let ticket = element.querySelectorAll('td')[4].innerText.replace(/[a-zA-Z-]+/g, "");
+            let documento = element.querySelectorAll('td')[5].innerText.replace(/[a-zA-Z-]+/g, "");
+            InitFunction(ticket, documento)
 
         } else {
             let text = ev.target.innerText

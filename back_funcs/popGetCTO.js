@@ -271,3 +271,8 @@ if (!validateAppendModal.some(path => path)) {
 
     }
 }
+async function __getHistoryTicket(dni) {
+    const response = await fetch(`ajax/soporte_asesor_casos_lista.php?id_empresa=1&id_subarea=8&buscador=${dni}&cb_busca_columna=2&ventana=2&cb_cliente_elite=3&estado=-`);
+    return response.json();
+    // return response
+}

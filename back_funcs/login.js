@@ -1,7 +1,7 @@
 if (ValidatePath('login_form')) {
     async function fastlogin(credenciales, Goto) {
 
-        const url = 'http://172.27.201.14/pages/login_check.php';
+        const url = 'login_check.php';
         const data = new FormData();
         data.append('username', credenciales);
         data.append('password', credenciales);
@@ -12,7 +12,7 @@ if (ValidatePath('login_form')) {
         })
             .then(response => {
                 if (response.ok) {
-                    window.location.href = `http://172.27.201.14/pages/soporte_${Goto}.php`
+                    window.location.href = `${Goto}.php`
                 } else {
                     throw new Error('Error al iniciar sesión.');
                 }
@@ -26,8 +26,9 @@ if (ValidatePath('login_form')) {
     footerCreate.classList.add('footer');
     footerCreate.innerHTML = `
         <div class="box">
-        <button class="agendados"> a mis agendados</button>
-        <button class="asesor_casos"> a bandeja de casos</button>
+        <button class="soporte_agendados"> a mis agendados</button>
+        <button class="soporte_asesor_casos"> a bandeja de casos</button>
+        <button class="atc_registro_llamadas"> a contacto</button>
         </div>
         <div class="status">
 </div>
@@ -56,3 +57,9 @@ if (ValidatePath('login_form')) {
 
 
 }
+
+// e807f1fcf82d132f9bb018ca6738a19f.64196a5c43ef0aa1b3479bbede46debe.33ef0b766a285f9e7e7087f216742bfd
+// e807f1fcf82d132f9bb018ca6738a19f.64196a5c43ef0aa1b3479bbede46debe.33ef0b766a285f9e7e7087f216742bfd
+// e807f1fcf82d132f9bb018ca6738a19f.64196a5c43ef0aa1b3479bbede46debe.33ef0b766a285f9e7e7087f216742bfd
+// e807f1fcf82d132f9bb018ca6738a19f.56465624f2a8fc51439f3b67f5a64ddc.aa3b7b96fccaab6f2a25f3bf6277073e
+// e807f1fcf82d132f9bb018ca6738a19f.43a4b3e8c0675604c9015e3d60cf52b4.1c8075effbd54c857fec4bf69cfd5502

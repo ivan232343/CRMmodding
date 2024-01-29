@@ -1,22 +1,25 @@
-
 .btn:not(.btn-link):not(.btn-circle) span {
   position: unset !important;
 
   margin: 0 !important;
 }
+
 .bg-blue p.name {
   width: 40rem;
 }
+
 .table tbody tr td,
 .table tbody tr th {
   border-top: unset !important;
   border-bottom: unset !important;
 }
+
 tr.template-download.fade.in {
   display: flex;
   align-items: center;
   justify-content: space-around;
 }
+
 table.table {
   margin: 0;
   border: 0;
@@ -34,6 +37,7 @@ button.btn.waves-effect {
     text-align: center;
     text-wrap: pretty;
   }
+
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -43,6 +47,7 @@ button.btn.waves-effect {
   bottom: 35%;
   right: 7rem;
 }
+
 .contenido_extension_agendados {
   position: fixed;
   top: 2.5rem;
@@ -66,11 +71,11 @@ button.btn.waves-effect {
   border-radius: 5rem;
 }
 
-.list-group-item:nth-child(odd) > .row {
+.list-group-item:nth-child(odd)>.row {
   padding: 1rem;
 }
 
-.list-group-item:nth-child(even) > .row {
+.list-group-item:nth-child(even)>.row {
   padding: 1rem;
 }
 
@@ -94,6 +99,7 @@ button.btn.waves-effect {
 .label-danger {
   background-color: red;
 }
+
 .form-group .form-line {
   border-bottom: 0 !important;
 }
@@ -109,23 +115,26 @@ select {
 
 
 
-ul.ml-menu > li a,
-a.waves-effect.waves-block > * {
+ul.ml-menu>li a,
+a.waves-effect.waves-block>* {
   transition: all 0.5s cubic-bezier(0.88, -0.01, 0.01, 0.28) 0s;
 }
+
 .extension {
-  & .item > input {
+  & .item>input {
     width: 40rem;
   }
 
   &.content._settings .item {
     padding: 1rem;
+
     &._box-addons {
       margin: 1.5rem 0px;
       max-height: 250px;
       overflow: auto;
       height: 20rem;
     }
+
     & h3 {
       grid-column: 1 / 3;
       text-align: center;
@@ -202,6 +211,24 @@ section.content {
   }
 }
 
+div#div_ajax_busca_tickets>div {
+  & .panel.panel-primary {
+    height: auto !important;
+    overflow-x: auto;
+
+    & .panel-title {
+      font-size: larger;
+    }
+  }
+}
+
+.panel-primary>.panel-heading+.panel-collapse>.panel-body {
+  border-top-color: unset;
+  height: 47rem;
+  overflow: auto;
+}
+
+
 ._ext.loading {
   display: flex;
   align-items: flex-end;
@@ -209,7 +236,7 @@ section.content {
   width: 20rem;
   height: 4rem;
 
-  & > .preloader {
+  &>.preloader {
     margin: auto;
   }
 }
@@ -227,20 +254,51 @@ div#div_ajax_tabla_file_subidos .body.table-responsive {
   }
 }
 
-.login-box > .card .footer .box {
+.login-box>.card .footer .box {
   color: black;
   padding: 1rem;
-  background-color: #5a4585;
   display: flex;
   align-items: center;
   justify-content: space-around;
+  flex-wrap: wrap;
   font-size: 1.6rem;
+
+  & button {
+    height: 3.8rem;
+    width: 15rem;
+    padding: .25rem;
+    margin: 0.5rem;
+  }
 }
-.login-box > .card .footer .status {
+
+.login-box>.card .footer .status {
   font-size: 1.5rem;
   padding: 0.5rem;
   text-align: center;
-  background-color: #5a4585;
-  color: white;
   font-weight: bolder;
+}
+
+.outer_div .panel-success>.panel-heading {
+  border: unset !important;
+  margin: 0 !important;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.box.ext_.gcounttm .resultado {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  align-content: space-around;
+  justify-content: center;
+}
+
+.ext_.content {
+  background-color: rgb(8, 161, 54);
+
+  & .ext_ {
+    color: #fcfcfc;
+    background-color: #462f76 !important;
+  }
 }

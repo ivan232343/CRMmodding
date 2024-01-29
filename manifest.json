@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "version": "6.5",
+  "version": "11.2.1",
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
   "default_locale": "es",
@@ -13,9 +13,11 @@
   "content_scripts": [
     {
       "matches": [
-        "http://172.27.201.14/pages/*"
+        "http://172.27.201.14/pages/*",
+        "https://appcrm.win.pe/*"
       ],
       "js": [
+        "module/moment.min.js",
         "back_funcs/init_functions.js",
         "back_funcs/login.js",
         "back_funcs/typeusers.js",

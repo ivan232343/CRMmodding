@@ -55,7 +55,7 @@ if (!ValidatePath(['index', 'login_form']).some(path => path)) {
                             </div>
                         </div>
                         <div class="_box monitoreo">
-                            <h3>AT-monitoreo</h3>
+                            <h3>Monitoreo</h3>
                             <div class="item">
                                 <div class="_sub">
                                     <label for="sc-alertcto">Alertar CTO</label>
@@ -77,10 +77,15 @@ if (!ValidatePath(['index', 'login_form']).some(path => path)) {
                                     <input type="checkbox" name="sc-closelosrojo" id="sc-closelosrojo"
                                         ${(DataReader.extFunction.sendLosRojo) ? "checked" : ""}>
                                 </div>
+                                <div class="_sub">
+                                    <label for="sc-gtxm">conteo de motivo al mes</label>
+                                    <input type="checkbox" name="sc-gtxm" id="sc-gtxm"
+                                        ${(DataReader.extFunction.gcounttm) ? "checked" : ""}>
+                                </div>
                             </div>
                         </div>
                         <div class="_box dgo">
-                            <h3>AT-DGO</h3>
+                            <h3>DGO</h3>
                             <div class="item">
                                 <div class="_sub">
                                     <label for="sc-clsdgo">Cerrar tkt (DGO)</label>
@@ -120,6 +125,7 @@ if (!ValidatePath(['index', 'login_form']).some(path => path)) {
             "ShortAlertCTO": document.getElementById('sc-alertcto').checked,
             'ShortCutLosRojo': document.getElementById('sc-slosrojo').checked,
             'ShoetCutSyncPext': document.getElementById('sc-syncpext').checked,
+            'ShortgetCountTicketM': document.getElementById('sc-gtxm').checked,
             'ShortCutCloseLosRojo': document.getElementById('sc-closelosrojo').checked
         }
         let SaveSetting = {
@@ -135,6 +141,7 @@ if (!ValidatePath(['index', 'login_form']).some(path => path)) {
                 "sendLosRojo": toChange.ShortCutLosRojo,
                 "syncPext": toChange.ShoetCutSyncPext,
                 "finlosrojo": toChange.ShortCutCloseLosRojo,
+                "gcounttm": toChange.ShortgetCountTicketM,
                 "multiupload": toChange.MultiUploadSend
             }
         }
