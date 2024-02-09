@@ -69,6 +69,9 @@ async function fastLogin(dniAsesor, goto) {
             console.error(error);
         });
 }
+if (window.document.location.href.includes('172.16.66.76')) {
+    document.body.style.filter = 'invert(1)'
+}
 
 // // navidad
 // let niu = document.createElement('ul')

@@ -1,20 +1,25 @@
 {
   "manifest_version": 3,
-  "version": "11.2.1",
+  "version": "11.53.3",
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
   "default_locale": "es",
   "action": {
-    "default_icon": "ico.ico"
+    "default_icon": {
+        "19": "src/logo/19.png",
+        "38": "src/logo/38.png"
+      }
   },
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "declarativeContent"
   ],
   "content_scripts": [
     {
       "matches": [
         "http://172.27.201.14/pages/*",
-        "https://appcrm.win.pe/*"
+        "https://appcrm.win.pe/*",
+        "https://172.16.66.76:31943/*"
       ],
       "js": [
         "module/moment.min.js",
@@ -31,9 +36,9 @@
         "module/llenadoSelect.js"
       ],
       "css": [
-        "css/crmstylemod.css",
-        "css/theme-default.css",
-        "css/theme-personal.css"
+        "src/css/crmstylemod.css",
+        "src/css/theme-default.css",
+        "src/css/theme-personal.css"
       ]
     }
   ]
