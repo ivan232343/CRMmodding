@@ -1,12 +1,13 @@
+const Areas = ['Residencial', 'Gamer', 'Dgo', 'Monitoreo'];
 let validateAppendModal = ValidatePath(['index', 'atc_registro_llamadas', 'login_form'])
 if (window.document.location.href.includes('172.16.66.76')) {
     document.body.style.filter = 'invert(1)'
 }
 if (!ValidatePath('login_form')) {
-    const configSaved = JSON.parse(localStorage.configCRM)
-    document.querySelector(".image img").src = configSaved.avatar;
+    // const configSaved = JSON.parse(localStorage.configCRM)
+    document.querySelector(".image img").src = baseConfig.profileConfig.avatar;
     let fondo = document.querySelector(".user-info");
-    fondo.style.backgroundImage = `url(${configSaved.background})`;
+    fondo.style.backgroundImage = `url(${baseConfig.profileConfig.background})`;
     fondo.style.backgroundSize = "cover";
     fondo.style.backgroundRepeat = "no-repeat";
     fondo.style.backgroundPosition = "center";
@@ -21,9 +22,11 @@ if (!ValidatePath('login_form')) {
     });
     document.querySelector('.sidebar .legal .copyright').innerText = `Extension desarrollada por Ivan Pulache :D, \t enjoy!`
 }
-
+document.querySelectorAll(".email")[1].innerText = `Area: AT - ${JSON.parse(localStorage.configCRM).profileConfig.area}`
 if (!validateAppendModal.some(path => path)) {
-    document.forms.form_audio_adjunto.querySelector('#uploadedFile').setAttribute('multiple', 'true')
+    if (baseConfig.moduleConfig.base.multiupload) {
+        document.forms.form_audio_adjunto.querySelector('#uploadedFile').setAttribute('multiple', 'true')
+    }
     let tempCopy = document.createElement('textarea')
     document.body.appendChild(tempCopy)
     tempCopy.style.display = 'none';
@@ -61,4 +64,3 @@ if (!validateAppendModal.some(path => path)) {
 
 };
 
-document.querySelectorAll(".dropdown-menu").forEach((e) => e.addEventListener('click', (ev) => ev.stopPropagation()))

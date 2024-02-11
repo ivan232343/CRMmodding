@@ -122,6 +122,12 @@ a.waves-effect.waves-block>* {
 
 .extension {
   & .item>input {
+    color: black;
+    width: 40rem;
+  }
+
+  & .item>select {
+    color: black;
     width: 40rem;
   }
 
@@ -301,4 +307,8 @@ div#div_ajax_tabla_file_subidos .body.table-responsive {
     color: #fcfcfc;
     background-color: #462f76 !important;
   }
+}
+
+.info-container>div {
+  font-size: 1.35rem !important;
 }

@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "version": "11.53.3",
+  "version": "12",
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
   "default_locale": "es",
@@ -22,23 +22,21 @@
         "https://172.16.66.76:31943/*"
       ],
       "js": [
-        "module/moment.min.js",
-        "back_funcs/init_functions.js",
-        "back_funcs/login.js",
-        "back_funcs/typeusers.js",
-        "back_funcs/popConfigExt.js",
-        "back_funcs/popGetCTO.js",
-        "back_funcs/forceStyles.js",
-        "back_funcs/ag.js",
-        "back_funcs/custom_functions.js",
-        "module/basicfuncs.js",
-        "module/CrmProcessShortly.js",
-        "module/llenadoSelect.js"
+        "src/js/vendor/moment.min.js",
+
+        "src/js/main/local.builder.js",
+        "src/js/main/base.function.js",
+        "src/js/main/base.inital.js",
+        "src/js/main/local.popup.js",
+        "src/js/main/local.logical.js",
+        
+        "src/js/styles/theme-builder.js",
+        "src/js/styles/forceStyles.js"
       ],
       "css": [
         "src/css/crmstylemod.css",
-        "src/css/theme-default.css",
-        "src/css/theme-personal.css"
+        "src/js/styles/theme-default.css",
+        "src/js/styles/theme-personal.css"
       ]
     }
   ]

@@ -3,6 +3,8 @@
 * ----- indice de funciones ------- *
 * --------------------------------- *
 * --  ValidatePath               -- *
+* --  InitFunction               -- *
+* --  mostrarCamposCliente       -- *
 * --  getUriFetch                -- *
 * --  countdown                  -- *
 * --  getRemainin2gTime          -- *
@@ -10,17 +12,15 @@
 * --  llenadoSelect              -- *
 * --  CrmProcessShortly          -- *
 * --  limitchar                  -- *
-* --  copyTextTable              -- *
 * --  (async) __getHistoryTicket -- *
 * --  (async) uploadFile         -- *
 * --  (async) getHTML            -- *
 * --  (async) getDataTable       -- *
-* --  mostrarCamposCliente       -- *
-* --  InitFunction               -- *
 * --  openLastTipiPopUp          -- *
 * --  mostrarONTinfo             -- *
 * --  longPoll                   -- *
 * --  SaveSettingCrm             -- *
+* --  copyTextTable              -- *
 * --------------------------------- *
 ************************************/
 
@@ -35,6 +35,80 @@ const ValidatePath = (path, subdir = false, args) => {
         return booleanArray
     }
 };
+const InitFunction = (ticket = null, dni = null) => {
+    window.ajax_mostrar_cliente = mostrarCamposCliente(ticket, dni)
+    // window.ajax_mostrar_atenciones = listarRegistroXTicket();
+};
+const mostrarCamposCliente = (tkt, dni) => {
+    let mdlCustom = document.querySelector('#mdModal')
+    let extBox = mdlCustom.querySelector('#init-ext')
+    extBox.innerHTML = '';
+    let extContentInner = "";
+    let mainelement = document.createElement("div")
+    mainelement.classList.add("col-xs-12", "col-sm-12", "col-md-12", "col-lg-12")
+    let extContent = document.createElement("div")
+    extContent.classList.add("ext_", "content");
+    const thrownew = JSON.parse(window.localStorage.configCRM);
+    let configCRM = { base: thrownew.moduleConfig.base, monitoreo: thrownew.moduleConfig.monitoreo, olvidados: thrownew.moduleConfig.olvidados };
+    console.log(configCRM)
+    extContentInner += (configCRM.base.agendar) ? `<div class="btn btn-warning ext_ agendados">A la bandeja</div>` : "";
+    extContentInner += (configCRM.base.listTkt) ? `<div class="btn btn-warning ext_ ticketlist">Historico de llamadas</div>` : "";
+    extContentInner += (configCRM.base.serviceinfo) ? `<div class="btn btn-warning ext_ ontinfo">Info ONT</div>` : "";
+    extContentInner += (configCRM.base.multiupload) ? `<div class="btn btn-warning ext_ multiupload" data-statusupload="void">Presiona aqui para subir todos las imagenes</div>` : "";
+    extContentInner += (configCRM.monitoreo.finlosrojo) ? `<div class="btn btn-warning ext_ finlosrojo">Cerrar tkt (monitoreo)</div>` : "";
+    extContentInner += (configCRM.monitoreo.sendLosRojo) ? `<div class="btn btn-warning ext_ sendlosrojo">Enviar LOS Rojo</div>` : "";
+    extContentInner += (configCRM.monitoreo.alertcto) ? `<div class="btn btn-warning ext_ statuscto">CTO <span class="results"></span> reporte</div>` : "";
+    extContentInner += (configCRM.monitoreo.gcounttm) ? `<div class="box ext_ gcounttm"><div class="resultado">cargando listado de tickets del cliente...</div></div>` : "";
+    extContentInner += (configCRM.olvidados.findgo) ? `<div class="btn btn-warning ext_ closedgo">Cerrar tkt (DGO)</div>` : "";
+    extContent.innerHTML = extContentInner
+    mainelement.appendChild(extContent)
+    configCRM.monitoreo.gcounttm ? __getHistoryTicket(dni).then(res => {
+        let thirtyDaysAgo = moment().subtract(30, 'days');
+        let filteredTickets = res.filter(ticket => {
+            let ticketDate = moment(ticket.fecha_creacion, 'DD/MM/YYYY HH:mm:ss'); // crea un objeto moment con el formato de la base de datos
+            return ticketDate.isAfter(thirtyDaysAgo); // compara si la fecha del ticket es posterior a la de hace 30 días
+        })
+        return filteredTickets;
+    }).then(data => {
+        const count = {};
+        for (const obj of data) {
+            const motivo = obj.motivo;
+            (count[motivo]) ? count[motivo]++ : count[motivo] = 1
+        }
+        return count
+    }).then(res => {
+        const divInterno = document.querySelector('.box.ext_.gcounttm .resultado')
+        console.log(res);
+        divInterno.innerHTML = ''
+        if (res !== null) {
+            for (const motivo in res) {
+                const item = document.createElement('div');
+                item.classList.add('item')
+                const dataElement = document.createElement('p');
+                const value = res[motivo];
+                dataElement.textContent = `${motivo}: ${value}`;
+                item.appendChild(dataElement);
+                divInterno.appendChild(item);
+            }
+        } else {
+            divInterno.innerHTML = '<div class="_ext loading"><i class="material-icons">cloud_off</i> <p>No se valida tickets en su historial</p></div>';
+        }
+    }) : '';
+    if (configCRM.monitoreo.alertcto) {
+        getHTML(tkt)
+            .then(result => {
+                document.querySelector('.ext_.statuscto .results').innerHTML = localStorage.getItem('pextReporting').includes(result) ? 'con' : 'sin'
+            })
+    }
+    if (configCRM.base.agendar) { mainelement.querySelector(".ext_.agendados").addEventListener("click", () => CrmProcessShortly()) };
+    if (configCRM.monitoreo.sendLosRojo) { mainelement.querySelector(".ext_.sendlosrojo").addEventListener("click", () => CrmProcessShortly(2)) };
+    if (configCRM.monitoreo.finlosrojo) { mainelement.querySelector(".ext_.finlosrojo").addEventListener("click", () => CrmProcessShortly(3)) };
+    if (configCRM.base.listTkt) { mainelement.querySelector(".ext_.ticketlist").addEventListener("click", () => openLastTipiPopUp()) };
+    if (configCRM.base.serviceinfo) { mainelement.querySelector(".ext_.ontinfo").addEventListener("click", () => mostrarONTinfo()) };
+    if (configCRM.base.multiupload) { mainelement.querySelector(".ext_.multiupload").addEventListener("click", (ev) => uploadFile(ev)) };
+    limitchar(configCRM.base.limitChar);
+    extBox.appendChild(mainelement)
+}
 function getUriFetch(windows) {
     const buildUri = (windows === 2 || windows === 7 || windows === 12) ? "asesor_casos_lista" : (windows === 5) ? 'asesor_agendados_lista2' : (windows === 3) ? 'visitas_lista_casos2_lista' : 'no_data'
     return buildUri;
@@ -84,51 +158,31 @@ async function fastLogin(dniAsesor, goto) {
             console.error(error);
         });
 };
-const llenadoSelect = (caso = 36, tip = ['244', 'Agendamiento'], mot = ['635', 'Se agenda llamada']) => {
-    console.log(caso, tip, mot);
-    let caseSupp = document.getElementById("cb_tipi_caso_soporte");
-    let tipo = document.getElementById("cb_tipo_tipi_cerrado");
-    let motivo = document.getElementById("cb_motivo_tipi_cerrado");
-    let opt1 = document.createElement("option");
-    let opt2 = document.createElement("option");
-    caseSupp.value = caso;
-    opt1.value = tip[0];
-    opt1.text = tip[1];
-    opt1.selected = true;
-    tipo.add(opt1);
-    opt2.value = mot[0];
-    opt2.text = mot[1];
-    opt2.selected = true;
-    motivo.add(opt2);
-};
 const CrmProcessShortly = (type = 1) => {
+    console.log(type)
     let desc = document.getElementById("txt_descripcion_caso")
-    let descripcion = ''
+    const mostraragendas = document.querySelector("#div_agendamiento").style;
+    let descripcion = '';
+    let tipificacionCustom = '';
     let now = new Date();
     document.getElementById("txt_agenda_hora").value = `${now.getHours().toString().padStart(2, '0')}:${now.getUTCMinutes().toString().padStart(2, '0')}`
     if (type === 1) {
         // type 1 = funcion para agendar en la bandeja de agendados xd
-        descripcion = desc.value !== "" ? desc.value : "se agenda para tratamiento al cliente";
         llenadoSelect();
-        document.querySelector("#div_agendamiento").style.display = "block";
+        tipificacionCustom = baseConfig.tipiCustom.agendar;
+        mostraragendas.display = "block";
     } else if (type === 2) {
         // envio visita por los rojo
-        descripcion = desc.value !== "" ? desc.value : "se envia vt por LOS ROJO"
-        llenadoSelect(34, ['207', 'Visita tecnica Externa'], ['1707', 'Los rojo'])
-        document.querySelector("#div_agendamiento").style.display = 'none'
+        llenadoSelect(dictionary.vt);
+        tipificacionCustom = baseConfig.tipiCustom.sendLosRojo;
+        mostraragendas.display = 'none'
     } else if (type === 3) {
-        // envio visita por masivo pext
-        let descTemp = desc.value
-        descripcion = `${desc.value !== "" ? descTemp : "se valida masivo"}`
-        llenadoSelect(34, ['207', 'Visita tecnica Externa'], ['1707', 'Los rojo'])
-        document.querySelector("#div_agendamiento").style.display = 'none'
-    } else if (type === 4) {
-        // envio visita por masivo pext
-        let descTemp = desc.value
-        descripcion = `${desc.value !== "" ? descTemp : "se valida masivo solventado y servicio activo se procede con el cierre del ticket  "}`
-        llenadoSelect(32, ['202', 'Problemas con el servicio'], ['407', 'Internet - Luz LOS en rojo'])
-        document.querySelector("#div_agendamiento").style.display = 'none'
+        // cerrar tkt por masivo pext
+        llenadoSelect(dictionary.closelosrojo);
+        tipificacionCustom = baseConfig.tipiCustom.finlosrojo;
+        mostraragendas.display = 'none'
     }
+    descripcion = desc.value !== "" ? desc.value : tipificacionCustom;
     desc.value = descripcion;
     if (document.getElementById("bt_guardar") !== null) {
         document.getElementById("bt_guardar").click();
@@ -136,6 +190,22 @@ const CrmProcessShortly = (type = 1) => {
         document.getElementById("bt_save_asesor_caso").click()
     }
     // document.querySelector('.sa-button-container .confirm').click()
+};
+const llenadoSelect = (caseu) => {
+    let caseSupp = document.getElementById("cb_tipi_caso_soporte");
+    let tipo = document.getElementById("cb_tipo_tipi_cerrado");
+    let motivo = document.getElementById("cb_motivo_tipi_cerrado");
+    let opt1 = document.createElement("option");
+    let opt2 = document.createElement("option");
+    caseSupp.value = caseu.caso;
+    opt1.value = caseu.tipo.value;
+    opt1.text = caseu.tipo.text;
+    opt1.selected = true;
+    tipo.add(opt1);
+    opt2.value = caseu.motivo.value;
+    opt2.text = caseu.motivo.text;
+    opt2.selected = true;
+    motivo.add(opt2);
 };
 const limitchar = (turn) => {
     let labelToMod = document.querySelector('label[for="Cod ALumno"]')
@@ -157,19 +227,6 @@ const limitchar = (turn) => {
     } else {
         labelToMod.innerText = 'Ingrese sus observaciones: ';
     }
-};
-const copyTextTable = () => {
-    document.querySelectorAll('.text-center').forEach((e) => {
-        e.addEventListener('click', (ev) => {
-            // console.log(ev.target.textContent.split(' ').join('\t'))
-            var content = document.getElementById('txt_descripcion_caso');
-            content.innerHTML = ev.target.textContent.split(' ').join('\t');
-            content.focus();
-            content.select();
-            document.execCommand('copy')
-            content.innerHTML = '';
-        })
-    })
 };
 async function __getHistoryTicket(dni) {
     const response = await fetch(`ajax/soporte_asesor_casos_lista.php?id_empresa=1&id_subarea=8&buscador=${dni}&cb_busca_columna=2&ventana=2&cb_cliente_elite=3&estado=-`);
@@ -198,7 +255,7 @@ async function uploadFile(entity) {
     midata.append('opcion2', opcion2);
     midata.append('opcion3', opcion3);
     for (let i = 0; i < toUpload.length; i++) {
-        document.getElementById("div_ajax_tabla_file_subidos").innerHTML = `Subiendo ${i + 1}/${toUpload.length + 1}`
+        document.getElementById("div_ajax_tabla_file_subidos").innerHTML = `Subiendo ${i + 1}/${toUpload.length}`
         midata.append('uploadedFile', toUpload[i]);
         await fetch('ajax/adjuntos-subir.php', {
             method: "POST",
@@ -258,74 +315,6 @@ async function getDataTable(ventana = null, mainMotivo = null, idSubArea = null)
     } catch (error) {
         console.error(error);
     }
-};
-const mostrarCamposCliente = (tkt, dni) => {
-    let mdlCustom = document.querySelector('#mdModal')
-    let extBox = mdlCustom.querySelector('#init-ext')
-    extBox.innerHTML = '';
-    let extContentInner = "";
-    let mainelement = document.createElement("div")
-    mainelement.classList.add("col-xs-12", "col-sm-12", "col-md-12", "col-lg-12")
-    let extContent = document.createElement("div")
-    extContent.classList.add("ext_", "content");
-    let configCRM = JSON.parse(localStorage.getItem("configCRM")).extFunction;
-
-    extContentInner += (configCRM.agendar) ? `<div class="btn btn-warning ext_ agendados">A la bandeja</div>` : "";
-    extContentInner += (configCRM.listTkt) ? `<div class="btn btn-warning ext_ ticketlist">Historico de llamadas</div>` : "";
-    extContentInner += (configCRM.serviceinfo) ? `<div class="btn btn-warning ext_ ontinfo">Info ONT</div>` : "";
-    extContentInner += (configCRM.findgo) ? `<div class="btn btn-warning ext_ closedgo">Cerrar tkt (DGO)</div>` : "";
-    extContentInner += (configCRM.finlosrojo) ? `<div class="btn btn-warning ext_ finlosrojo">Cerrar tkt (monitoreo)</div>` : "";
-    extContentInner += (configCRM.sendLosRojo) ? `<div class="btn btn-warning ext_ sendlosrojo">Enviar LOS Rojo</div>` : "";
-    extContentInner += (configCRM.alertcto) ? `<div class="btn btn-warning ext_ statuscto">CTO <span class="results"></span> reporte</div>` : "";
-    extContentInner += (configCRM.multiupload) ? `<div class="btn btn-warning ext_ multiupload" data-statusupload="void">Presiona aqui para subir todos las imagenes</div>` : "";
-    extContentInner += (configCRM.gcounttm) ? `<div class="box ext_ gcounttm"><div class="resultado">cargando listado de tickets del cliente...</div></div>` : "";
-    extContent.innerHTML = extContentInner
-    mainelement.appendChild(extContent)
-    configCRM.gcounttm ? __getHistoryTicket(dni).then(res => {
-        let thirtyDaysAgo = moment().subtract(30, 'days');
-        let filteredTickets = res.filter(ticket => {
-            let ticketDate = moment(ticket.fecha_creacion, 'DD/MM/YYYY HH:mm:ss'); // crea un objeto moment con el formato de la base de datos
-            return ticketDate.isAfter(thirtyDaysAgo); // compara si la fecha del ticket es posterior a la de hace 30 días
-        })
-        return filteredTickets;
-    }).then(data => {
-        const count = {};
-        for (const obj of data) {
-            const motivo = obj.motivo;
-            (count[motivo]) ? count[motivo]++ : count[motivo] = 1
-        }
-        return count
-    }).then(res => {
-        const divInterno = document.querySelector('.box.ext_.gcounttm .resultado')
-        console.log(res);
-        divInterno.innerHTML = ''
-        if (res !== null) {
-            for (const motivo in res) {
-                const item = document.createElement('div');
-                item.classList.add('item')
-                const dataElement = document.createElement('p');
-                const value = res[motivo];
-                dataElement.textContent = `${motivo}: ${value}`;
-                item.appendChild(dataElement);
-                divInterno.appendChild(item);
-            }
-        } else {
-            divInterno.innerHTML = '<div class="_ext loading"><i class="material-icons">cloud_off</i> <p>No se valida tickets en su historial</p></div>';
-        }
-    }) : '';
-    configCRM.alertcto ? getHTML(tkt).then(result => { document.querySelector('.ext_.statuscto .results').innerHTML = localStorage.getItem('pextReporting').includes(result) ? 'con' : 'sin' }) : '';
-    configCRM.agendar ? mainelement.querySelector(".ext_.agendados").addEventListener("click", () => CrmProcessShortly()) : "";
-    configCRM.sendLosRojo ? mainelement.querySelector(".ext_.sendlosrojo").addEventListener("click", () => CrmProcessShortly(2)) : "";
-    configCRM.finlosrojo ? mainelement.querySelector(".ext_.finlosrojo").addEventListener("click", () => CrmProcessShortly(4)) : "";
-    configCRM.listTkt ? mainelement.querySelector(".ext_.ticketlist").addEventListener("click", () => openLastTipiPopUp()) : "";
-    configCRM.serviceinfo ? mainelement.querySelector(".ext_.ontinfo").addEventListener("click", () => mostrarONTinfo()) : "";
-    configCRM.multiupload ? mainelement.querySelector(".ext_.multiupload").addEventListener("click", (ev) => uploadFile(ev)) : "";
-    limitchar(configCRM.limitChar);
-    extBox.appendChild(mainelement)
-}
-const InitFunction = (ticket = null, dni = null) => {
-    window.ajax_mostrar_cliente = mostrarCamposCliente(ticket, dni)
-    // window.ajax_mostrar_atenciones = listarRegistroXTicket();
 };
 const openLastTipiPopUp = () => {
     let dni = document.getElementById("txt_dni_cliente").value
@@ -397,7 +386,7 @@ function SaveSettingCrm() {
         "ShortAlertCTO": document.getElementById('sc-alertcto').checked,
         'ShortCutLosRojo': document.getElementById('sc-slosrojo').checked,
         'ShoetCutSyncPext': document.getElementById('sc-syncpext').checked,
-        'ShortgetCountTicketM': document.getElementById('sc-gtxm').checked,
+        'ShortgetCountTicketM': document.getElementById('sc-gcounttm').checked,
         'ShortCutCloseLosRojo': document.getElementById('sc-closelosrojo').checked
     }
     let SaveSetting = {
@@ -424,7 +413,37 @@ function SaveSettingCrm() {
             "olvidados": {
                 "findgo": toChange.ShortCutCloseDgo,
             }
+        },
+        "styleConfig": {
+            "color1": "",
+            "color2": "",
+            "color3": "",
+            "color4": "",
+            "color5": "",
+            "color6": "",
+            "color7": "",
+            "color8": "",
+            "color9": "",
+        },
+        "tipiCustom": {
+            "agendar": "se agenda para tratamiento al cliente",
+            "sendLosRojo": "se envia vt por LOS ROJO",
+            "finlosrojo": "cliente dentro del masivo se cierra tkt",
+            "findgo": "se valida acceso cliente brinda conformidad se cierra ticket",
         }
     }
     localStorage.configCRM = JSON.stringify(SaveSetting)
 }
+const copyTextTable = () => {
+    document.querySelectorAll('.text-center').forEach((e) => {
+        e.addEventListener('click', (ev) => {
+            // console.log(ev.target.textContent.split(' ').join('\t'))
+            var content = document.getElementById('txt_descripcion_caso');
+            content.innerHTML = ev.target.textContent.split(' ').join('\t');
+            content.focus();
+            content.select();
+            document.execCommand('copy')
+            content.innerHTML = '';
+        })
+    })
+};

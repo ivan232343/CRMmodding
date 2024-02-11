@@ -65,11 +65,9 @@ select#s_data_to,
 }
 
 ._sub,
-.box,
 ._box h3,
 #accordion_9>div a,
-#collapseOne_1>* div,
-.extension {
+#collapseOne_1>* div {
   color: white;
 }
 

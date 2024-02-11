@@ -12,6 +12,7 @@ if (localStorage.getItem("configCRM") === null) {
                 "serviceinfo": true,
                 "limitChar": false,
                 "multiupload": true,
+                "copytable": true
             },
             "monitoreo": {
                 "alertcto": false,
@@ -37,7 +38,7 @@ if (localStorage.getItem("configCRM") === null) {
         },
         "tipiCustom": {
             "agendar": "se agenda para tratamiento al cliente",
-            "sendLosRojo": "se envia vt por LOS ROJO",
+            "sendlosRojo": "se envia vt por LOS ROJO",
             "finlosrojo": "cliente dentro del masivo se cierra tkt",
             "findgo": "se valida acceso cliente brinda conformidad se cierra ticket",
         }
@@ -66,6 +67,10 @@ const modulos = {
         code: "multiupload",
         nombre: "Unlock multi images",
         descripcion: "Desbloquea el limite de subida de evidencias en los tickets puedes subir mas de 1 a un solo click"
+    }, {
+        code: "copytable",
+        nombre: "Copy values",
+        descripcion: "Copia los valores de la tabla donde hagas click de la tabla de casos"
     }],
     "monitoreo": [{
         code: "alertcto",
@@ -83,10 +88,37 @@ const modulos = {
         code: "finlosrojo",
         nombre: "Cerrar ticket LOS",
         descripcion: "Auto completa la tipificacion SOPORTE(AT) - Problemas con el servicio - Internet - Luz LOS en rojo con una pequeña descripcion\nPuedes colocar la observacion que tu quieres y tomara ese como tipificacion principal"
+    }, {
+        code: "gcounttm",
+        nombre: "Conteo de tickets mensuales",
+        descripcion: "Visualiza la cantidad de tickets por tipo segun el motivo"
     }],
     "olvidados": [{
         code: "findgo",
         nombre: "Cerrar ticket DGO",
         descripcion: "Auto completa la tipificacion SOPORTE(AT) - Problemas con el servicio - Internet - sin acceso a pagina web con una pequeña descripcion\nPuedes colocar la observacion que tu quieres y tomara ese como tipificacion principal"
     }]
+}
+const dictionary = {
+    vt: {
+        caso: 34,
+        tipo: { value: '207', text: 'Visita tecnica Externa' },
+        motivo: { value: '1707', text: 'Los rojo' }
+    },
+    closelosrojo: {
+        caso: 32,
+        tipo: { value: '202', text: 'Problemas con el servicio' },
+        motivo: { value: '407', text: 'Internet - Luz LOS en rojo' },
+    },
+    closedgo: {
+        caso: 32,
+        tipo: { value: '202', text: 'Problemas con el servicio' },
+        motivo: { value: '408', text: 'Internet - sin acceso a pagina web' },
+    },
+    agenda: {
+        caso: 36,
+        tipo: { value: '244', text: 'Agendamiento' },
+        motivo: { value: '635', text: 'Se agenda llamada' },
+
+    }
 }
