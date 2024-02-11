@@ -168,7 +168,7 @@ const CrmProcessShortly = (type = 1) => {
     document.getElementById("txt_agenda_hora").value = `${now.getHours().toString().padStart(2, '0')}:${now.getUTCMinutes().toString().padStart(2, '0')}`
     if (type === 1) {
         // type 1 = funcion para agendar en la bandeja de agendados xd
-        llenadoSelect();
+        llenadoSelect(dictionary.agendar);
         tipificacionCustom = baseConfig.tipiCustom.agendar;
         mostraragendas.display = "block";
     } else if (type === 2) {
