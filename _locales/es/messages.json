@@ -4,7 +4,7 @@
         "description": "Name of the extension."
     },
     "extensionDescription": {
-        "message": "Modifica el sistema CRM de WIN agregando colores y agregando herramientas y mejoras, \n Bienvenidos a la version 10 :D, ahora puedes subir varios archivos a la vez ademas de iniciar sesion mas rapido con los botones de logeo previamente configurando tu usuario, otros cambios menores",
+        "message": "Modifica el sistema CRM de WIN agregando colores y agregando herramientas y mejoras",
         "description": "Description of the extension."
     }
 }

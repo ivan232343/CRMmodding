@@ -49,7 +49,7 @@ const mostrarCamposCliente = (tkt, dni) => {
     let extContent = document.createElement("div")
     extContent.classList.add("ext_", "content");
     const thrownew = JSON.parse(window.localStorage.configCRM);
-    let configCRM = { base: thrownew.moduleConfig.base, monitoreo: thrownew.moduleConfig.monitoreo, olvidados: thrownew.moduleConfig.olvidados };
+    let configCRM = { base: thrownew.moduleConfig.base, monitoreo: thrownew.moduleConfig.monitoreo, dgo: thrownew.moduleConfig.dgo };
     console.log(configCRM)
     extContentInner += (configCRM.base.agendar) ? `<div class="btn btn-warning ext_ agendados">A la bandeja</div>` : "";
     extContentInner += (configCRM.base.listTkt) ? `<div class="btn btn-warning ext_ ticketlist">Historico de llamadas</div>` : "";
@@ -59,7 +59,7 @@ const mostrarCamposCliente = (tkt, dni) => {
     extContentInner += (configCRM.monitoreo.sendLosRojo) ? `<div class="btn btn-warning ext_ sendlosrojo">Enviar LOS Rojo</div>` : "";
     extContentInner += (configCRM.monitoreo.alertcto) ? `<div class="btn btn-warning ext_ statuscto">CTO <span class="results"></span> reporte</div>` : "";
     extContentInner += (configCRM.monitoreo.gcounttm) ? `<div class="box ext_ gcounttm"><div class="resultado">cargando listado de tickets del cliente...</div></div>` : "";
-    extContentInner += (configCRM.olvidados.findgo) ? `<div class="btn btn-warning ext_ closedgo">Cerrar tkt (DGO)</div>` : "";
+    extContentInner += (configCRM.dgo.findgo) ? `<div class="btn btn-warning ext_ closedgo">Cerrar tkt (DGO)</div>` : "";
     extContent.innerHTML = extContentInner
     mainelement.appendChild(extContent)
     configCRM.monitoreo.gcounttm ? __getHistoryTicket(dni).then(res => {
@@ -168,17 +168,17 @@ const CrmProcessShortly = (type = 1) => {
     document.getElementById("txt_agenda_hora").value = `${now.getHours().toString().padStart(2, '0')}:${now.getUTCMinutes().toString().padStart(2, '0')}`
     if (type === 1) {
         // type 1 = funcion para agendar en la bandeja de agendados xd
-        llenadoSelect(dictionary.agendar);
+        llenadoSelect(tipificaciones.agendar);
         tipificacionCustom = baseConfig.tipiCustom.agendar;
         mostraragendas.display = "block";
     } else if (type === 2) {
         // envio visita por los rojo
-        llenadoSelect(dictionary.vt);
+        llenadoSelect(tipificaciones.vt);
         tipificacionCustom = baseConfig.tipiCustom.sendLosRojo;
         mostraragendas.display = 'none'
     } else if (type === 3) {
         // cerrar tkt por masivo pext
-        llenadoSelect(dictionary.closelosrojo);
+        llenadoSelect(tipificaciones.closelosrojo);
         tipificacionCustom = baseConfig.tipiCustom.finlosrojo;
         mostraragendas.display = 'none'
     }
@@ -242,18 +242,15 @@ async function uploadFile(entity) {
     let idContrato = document.getElementById('txt_id_reg').value;
     let fuente = 'AT';
     let txt_id_area_sub_det3 = document.getElementById('txt_id_area_sub_det').value;
-    let opcion1 = '';
-    let opcion2 = '';
-    let opcion3 = '';
     let toUpload = formArea.uploadedFile.files;
     midata.append('dni_asesor', dniAsesor);
     midata.append('dni_cliente', dniCliente);
     midata.append('id_venta', idContrato);
     midata.append('origen', fuente);
     midata.append('txt_id_area_sub_det', txt_id_area_sub_det3);
-    midata.append('opcion1', opcion1);
-    midata.append('opcion2', opcion2);
-    midata.append('opcion3', opcion3);
+    midata.append('opcion1', '');
+    midata.append('opcion2', '');
+    midata.append('opcion3', '');
     for (let i = 0; i < toUpload.length; i++) {
         document.getElementById("div_ajax_tabla_file_subidos").innerHTML = `Subiendo ${i + 1}/${toUpload.length}`
         midata.append('uploadedFile', toUpload[i]);
@@ -373,66 +370,21 @@ function fieldBuilder(...args) {
     }
 }
 function SaveSettingCrm() {
-    let toChange = {
-        "config_avatar": document.getElementById("avatar_custom").value,
-        "config_banner": document.getElementById("banner_custom").value,
-        "config_profile": document.getElementById("profile_area").value,
-        "ShortCutAgendar": document.getElementById("sc-ag").checked,
-        "ShortCutHistorial": document.getElementById("sc-hist").checked,
-        "MultiUploadSend": document.getElementById("sc-multiupload").checked,
-        "ShortCutInfoServ": document.getElementById("sc-info").checked,
-        "ShortCutCloseDgo": document.getElementById("sc-clsdgo").checked,
-        "ShortLimitCharDesc": document.getElementById("sc-limitchar").checked,
-        "ShortAlertCTO": document.getElementById('sc-alertcto').checked,
-        'ShortCutLosRojo': document.getElementById('sc-slosrojo').checked,
-        'ShoetCutSyncPext': document.getElementById('sc-syncpext').checked,
-        'ShortgetCountTicketM': document.getElementById('sc-gcounttm').checked,
-        'ShortCutCloseLosRojo': document.getElementById('sc-closelosrojo').checked
-    }
-    let SaveSetting = {
-        "profileConfig": {
-            "avatar": toChange.config_avatar,
-            "background": toChange.config_banner,
-            "area": toChange.config_profile,
-        },
-        "moduleConfig": {
-            "base": {
-                "agendar": toChange.ShortCutAgendar,
-                "listTkt": toChange.ShortCutHistorial,
-                "serviceinfo": toChange.ShortCutInfoServ,
-                "limitChar": toChange.ShortLimitCharDesc,
-                "multiupload": toChange.MultiUploadSend,
-            },
-            "monitoreo": {
-                "alertcto": toChange.ShortAlertCTO,
-                "sendLosRojo": toChange.ShortCutLosRojo,
-                "finlosrojo": toChange.ShortCutCloseLosRojo,
-                "syncPext": toChange.ShoetCutSyncPext,
-                "gcounttm": toChange.ShortgetCountTicketM,
-            },
-            "olvidados": {
-                "findgo": toChange.ShortCutCloseDgo,
+    let toChange = localDefault;
+    Object.getOwnPropertyNames(toChange.profileConfig).forEach(name => {
+        toChange.profileConfig[name] = document.querySelector(`#${name}_custom`).value;
+    })
+    Object.getOwnPropertyNames(toChange.moduleConfig).forEach(name => {
+        console.log('---' + name + '---')
+        Object.getOwnPropertyNames(toChange.moduleConfig[name]).forEach(m => {
+            try {
+                toChange.moduleConfig[name][m] = document.getElementById(`sc-${m}`).checked
+            } catch (error) {
+                toChange.moduleConfig[name][m] = false
             }
-        },
-        "styleConfig": {
-            "color1": "",
-            "color2": "",
-            "color3": "",
-            "color4": "",
-            "color5": "",
-            "color6": "",
-            "color7": "",
-            "color8": "",
-            "color9": "",
-        },
-        "tipiCustom": {
-            "agendar": "se agenda para tratamiento al cliente",
-            "sendLosRojo": "se envia vt por LOS ROJO",
-            "finlosrojo": "cliente dentro del masivo se cierra tkt",
-            "findgo": "se valida acceso cliente brinda conformidad se cierra ticket",
-        }
-    }
-    localStorage.configCRM = JSON.stringify(SaveSetting)
+        })
+    })
+    localStorage.configCRM = JSON.stringify(toChange)
 }
 const copyTextTable = () => {
     document.querySelectorAll('.text-center').forEach((e) => {

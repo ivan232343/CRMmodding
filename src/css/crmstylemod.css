@@ -136,9 +136,9 @@ a.waves-effect.waves-block>* {
 
     &._box-addons {
       margin: 1.5rem 0px;
-      max-height: 250px;
+      max-height: 300px;
       overflow: auto;
-      height: 20rem;
+      height: 35rem;
     }
 
     & h3 {
@@ -147,12 +147,19 @@ a.waves-effect.waves-block>* {
     }
 
     & ._sub {
-      display: inline-flex;
       border: solid 1px white;
-      padding: 0.5rem 2rem;
-      justify-content: flex-end;
-      flex-direction: row-reverse;
-      margin: 0.4rem;
+      display: grid;
+      align-items: center;
+      justify-items: center;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 1rem;
+      text-align: center;
+      margin: 0.5rem 0;
+      padding: 1.5rem;
+
+      & p {
+        grid-column: -3/-1;
+      }
 
       & label {
         margin: auto 1rem;
@@ -253,10 +260,10 @@ div#div_ajax_tabla_file_subidos .body.table-responsive {
 
 ._settings {
   & .item .item {
-    display: grid;
-    justify-items: stretch;
+    /* display: grid; */
+    /* justify-items: stretch; */
     gap: 0.55rem;
-    grid-template-columns: 1fr 1fr;
+    /* grid-template-columns: 1fr 1fr; */
   }
 }
 

@@ -1,6 +1,6 @@
-let banner = document.getElementById("banner_custom")
+let banner = document.getElementById("background_custom")
 let avatar = document.getElementById("avatar_custom")
-let areaSelected = document.getElementById("profile_area")
+let areaSelected = document.getElementById("area_custom")
 avatar.addEventListener("input", (e) => {
     document.querySelector(".user-info .image img").src = e.target.value
     SaveSettingCrm();
@@ -18,4 +18,3 @@ areaSelected.addEventListener("change", () => {
 document.querySelectorAll(".item [type=checkbox]").forEach((e) => {
     e.addEventListener("change", () => SaveSettingCrm())
 })
-document.querySelectorAll(".dropdown-menu").forEach((e) => e.addEventListener('click', (ev) => ev.stopPropagation()))

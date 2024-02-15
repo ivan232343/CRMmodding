@@ -4,7 +4,6 @@ if (!ValidatePath(['index', 'login_form']).some(path => path)) {
         console.log(Areas[i], baseConfig.profileConfig.area, baseConfig.profileConfig.area === Areas[i])
         tempselect += `<option value="${Areas[i].toString()}" ${Areas[i] === baseConfig.profileConfig.area ? 'selected' : ''}>${Areas[i].toString()}</option>`
     }
-    console.log(tempselect)
     document.querySelector(".nav.navbar-nav.navbar-right").innerHTML = `
     <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="margin-top:8px;" role="button">
@@ -101,16 +100,8 @@ if (!ValidatePath(['index', 'login_form']).some(path => path)) {
                                 <div class="_sub">
                                     <label for="sc-clsdgo">Cerrar tkt (DGO)</label>
                                     <input type="checkbox" name="sc-clsdgo" id="sc-clsdgo"
-                                        ${(baseConfig.moduleConfig.olvidados.findgo) ? "checked" : ""}>
+                                        ${(baseConfig.moduleConfig.dgo.findgo) ? "checked" : ""}>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item _box-extrasconfig">
-                        <div class="_box fastlogin">
-                            <div class="area-form">
-                                <label for="dniasesor">Configura tu logeo rapido</label>
-                                <input type="password" name="dniasesor" id="dniasesor">
                             </div>
                         </div>
                     </div>
