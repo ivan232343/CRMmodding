@@ -370,6 +370,7 @@ function fieldBuilder(...args) {
     }
 }
 function SaveSettingCrm() {
+    console.log("se acciono no se de donde")
     let toChange = localDefault;
     Object.getOwnPropertyNames(toChange.profileConfig).forEach(name => {
         toChange.profileConfig[name] = document.querySelector(`#${name}_custom`).value;
@@ -399,3 +400,50 @@ const copyTextTable = () => {
         })
     })
 };
+const loadModules = () => {
+    document.querySelector("._box-addons").innerHTML = "";
+    const perfiles = Object.getOwnPropertyNames(modulos);
+    const internalLS = JSON.parse(window.localStorage.configCRM);
+    perfiles.map(e => {
+        if (internalLS.profileConfig.area.toLowerCase().includes(e) || e === 'base') {
+            const _boxGen = document.createElement('div');
+            const title = document.createElement('h3');
+            const _itemTemp = document.createElement('div');
+            _boxGen.classList.add("_box", e);
+            title.textContent = `Herramientas ${e}`;
+            _itemTemp.classList.add("item");
+            _boxGen.appendChild(title);
+
+            modulos[e].forEach(u => {
+                const _subTemp = document.createElement('div');
+                const labelTemp = document.createElement("label");
+                const inputBuildTemp = document.createElement("input");
+                const detailsTemp = document.createElement('p');
+                const idTemp = `sc-${u.code}`;
+                _subTemp.classList.add("_sub");
+                labelTemp.setAttribute("for", idTemp);
+                labelTemp.textContent = u.label;
+                inputBuildTemp.type = 'checkbox';
+                inputBuildTemp.name = idTemp;
+                inputBuildTemp.id = idTemp;
+                inputBuildTemp.dataset.area = e
+                inputBuildTemp.checked = internalLS.moduleConfig[e][u.code]
+                detailsTemp.textContent = u.descripcion
+                _itemTemp.appendChild(_subTemp);
+                _subTemp.appendChild(labelTemp);
+                _subTemp.appendChild(inputBuildTemp);
+                _subTemp.appendChild(detailsTemp);
+            })
+            _boxGen.appendChild(_itemTemp);
+            document.querySelector("._box-addons").appendChild(_boxGen)
+        }
+    })
+    document.querySelectorAll(".item [type=checkbox]").forEach((e) => {
+        e.addEventListener("change", () => {
+            console.log("no creo que sea este ")
+            SaveSettingCrm()
+        }
+        );
+    })
+
+}

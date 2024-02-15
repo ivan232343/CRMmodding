@@ -59,38 +59,4 @@ profileTemplate.forEach(e => {
 
     mainDropDwn.querySelector("._profile-sett").appendChild(_itemTemp)
 })
-const perfiles = Object.getOwnPropertyNames(modulos);
-perfiles.map(e => {
-    if (baseConfig.profileConfig.area.toLowerCase().includes(e) || e === 'base') {
-        const _boxGen = document.createElement('div');
-        const title = document.createElement('h3');
-        const _itemTemp = document.createElement('div');
-        _boxGen.classList.add("_box", e);
-        title.textContent = `Herramientas ${e}`;
-        _itemTemp.classList.add("item");
-        _boxGen.appendChild(title);
-
-        modulos[e].forEach(u => {
-            const _subTemp = document.createElement('div');
-            const labelTemp = document.createElement("label");
-            const inputBuildTemp = document.createElement("input");
-            const detailsTemp = document.createElement('p');
-            const idTemp = `sc-${u.code}`;
-            _subTemp.classList.add("_sub");
-            labelTemp.setAttribute("for", idTemp);
-            labelTemp.textContent = u.label;
-            inputBuildTemp.type = 'checkbox';
-            inputBuildTemp.name = idTemp;
-            inputBuildTemp.id = idTemp;
-            inputBuildTemp.dataset.area = e
-            inputBuildTemp.checked = baseConfig.moduleConfig.base[u.code]
-            detailsTemp.textContent = u.descripcion
-            _itemTemp.appendChild(_subTemp);
-            _subTemp.appendChild(labelTemp);
-            _subTemp.appendChild(inputBuildTemp);
-            _subTemp.appendChild(detailsTemp);
-        })
-        _boxGen.appendChild(_itemTemp);
-        mainDropDwn.querySelector("._box-addons").appendChild(_boxGen)
-    }
-})
+loadModules();
