@@ -2,7 +2,7 @@ const localDefault = {
     "profileConfig": {
         "avatar": "https://appcrm.win.pe/images/user.png",
         "background": "https://appcrm.win.pe/images/user-img-background.jpg",
-        "area": "aaaa"
+        "area": "Residencial"
     },
     "moduleConfig": {
         "base": {
