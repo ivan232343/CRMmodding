@@ -24,16 +24,9 @@ const localDefault = {
             "findgo": false,
         }
     },
-    "styleConfig": {
-        "color1": "",
-        "color2": "",
-        "color3": "",
-        "color4": "",
-        "color5": "",
-        "color6": "",
-        "color7": "",
-        "color8": "",
-        "color9": "",
+    "themePicked": {
+        "now": "ninguno",
+        "previus": "ninguno"
     },
     "tipiCustom": {
         "agendar": "se agenda para tratamiento al cliente",
@@ -41,7 +34,7 @@ const localDefault = {
         "finlosrojo": "cliente dentro del masivo se cierra tkt",
         "findgo": "se valida acceso cliente brinda conformidad se cierra ticket",
     },
-    "version": 12.5
+    "version": 13.5
 }
 
 const baseConfig = JSON.parse(typeof window.localStorage.configCRM !== 'undefined' ? window.localStorage.configCRM : '{"error":true}');
@@ -77,7 +70,7 @@ const modulos = {
         label: "Copy values",
         descripcion: "Copia los valores de la tabla donde hagas click de la tabla de casos"
     }, {
-        code: "gcounttmr",
+        code: "gcounttm",
         label: "Conteo de tickets mensuales minificado",
         descripcion: "Visualiza la cantidad de tickets por tipo segun el motivo"
     }],
@@ -89,10 +82,6 @@ const modulos = {
         code: "finlosrojo",
         label: "Cerrar ticket LOS",
         descripcion: "Auto completa la tipificacion SOPORTE(AT) - Problemas con el servicio - Internet - Luz LOS en rojo con una pequeña descripcion\nPuedes colocar la observacion que tu quieres y tomara ese como tipificacion principal"
-    }, {
-        code: "gcounttm",
-        label: "Conteo de tickets mensuales minificado",
-        descripcion: "Visualiza la cantidad de tickets por tipo segun el motivo"
     }],
     dgo: [{
         code: "findgo",
@@ -130,5 +119,32 @@ const tipificaciones = {
         tipo: { value: '244', text: 'Agendamiento' },
         motivo: { value: '635', text: 'Se agenda llamada' },
 
+    }
+}
+const nivelesClientes = {
+    criticoReiterado: {
+        minSum: 12,
+        minMn: 7,
+        msg: 'CLIENTE REITERADO!!!\nHabla con el supervisor/apoyo de turno para dar solucion definitiva'
+    },
+    reiterado: {
+        minSum: 8,
+        minMn: 5,
+        msg: '¡ALERTA! cliente reiterado, intenta solucionarlo, se recomienda VT o NOC, solo si lo amerita y previa consulta con el supervisor/apoyo de turno'
+    },
+    alerta: {
+        minSum: 4,
+        minMn: 3,
+        msg: 'esta llamando muy seguido, cuidado'
+    },
+    tranqui: {
+        minSum: 2,
+        minMn: 1,
+        msg: 'cliente anda en sus primeros contactos, da soporte normal, trata de solucionarlo en este contacto'
+    },
+    chill: {
+        minSum: 0,
+        minMn: 0,
+        msg: 'Primer contacto, soporte regular'
     }
 }

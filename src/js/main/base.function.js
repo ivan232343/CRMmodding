@@ -8,19 +8,20 @@
 * --  getUriFetch                -- *
 * --  countdown                  -- *
 * --  getRemainin2gTime          -- *
-* --  (async) fastLogin **       -- *
-* --  llenadoSelect              -- *
+* --  fastLogin                  -- *
 * --  CrmProcessShortly          -- *
+* --  llenadoSelect              -- *
 * --  limitchar                  -- *
-* --  (async) __getHistoryTicket -- *
-* --  (async) uploadFile         -- *
-* --  (async) getHTML            -- *
-* --  (async) getDataTable       -- *
+* --  __getHistoryTicket         -- *
+* --  uploadFile                 -- *
+* --  getHTML                    -- *
+* --  getDataTable               -- *
 * --  openLastTipiPopUp          -- *
 * --  mostrarONTinfo             -- *
 * --  longPoll                   -- *
 * --  SaveSettingCrm             -- *
 * --  copyTextTable              -- *
+* --  loadModules                -- *
 * --------------------------------- *
 ************************************/
 
@@ -39,7 +40,9 @@ const InitFunction = (ticket = null, dni = null) => {
     window.ajax_mostrar_cliente = mostrarCamposCliente(ticket, dni)
     // window.ajax_mostrar_atenciones = listarRegistroXTicket();
 };
-const mostrarCamposCliente = (tkt, dni) => {
+const mostrarCamposCliente = (tkt, dni, codPedido) => {
+    let alturaTotal = window.innerHeight;
+    let anchuraScreen = window.innerWidth;
     let mdlCustom = document.querySelector('#mdModal')
     let extBox = mdlCustom.querySelector('#init-ext')
     extBox.innerHTML = '';
@@ -48,66 +51,133 @@ const mostrarCamposCliente = (tkt, dni) => {
     mainelement.classList.add("col-xs-12", "col-sm-12", "col-md-12", "col-lg-12")
     let extContent = document.createElement("div")
     extContent.classList.add("ext_", "content");
-    const thrownew = JSON.parse(window.localStorage.configCRM);
-    let configCRM = { base: thrownew.moduleConfig.base, monitoreo: thrownew.moduleConfig.monitoreo, dgo: thrownew.moduleConfig.dgo };
-    console.log(configCRM)
-    extContentInner += (configCRM.base.agendar) ? `<div class="btn btn-warning ext_ agendados">A la bandeja</div>` : "";
-    extContentInner += (configCRM.base.listTkt) ? `<div class="btn btn-warning ext_ ticketlist">Historico de llamadas</div>` : "";
-    extContentInner += (configCRM.base.serviceinfo) ? `<div class="btn btn-warning ext_ ontinfo">Info ONT</div>` : "";
-    extContentInner += (configCRM.base.multiupload) ? `<div class="btn btn-warning ext_ multiupload" data-statusupload="void">Presiona aqui para subir todos las imagenes</div>` : "";
-    extContentInner += (configCRM.monitoreo.finlosrojo) ? `<div class="btn btn-warning ext_ finlosrojo">Cerrar tkt (monitoreo)</div>` : "";
-    extContentInner += (configCRM.monitoreo.sendLosRojo) ? `<div class="btn btn-warning ext_ sendlosrojo">Enviar LOS Rojo</div>` : "";
-    extContentInner += (configCRM.monitoreo.alertcto) ? `<div class="btn btn-warning ext_ statuscto">CTO <span class="results"></span> reporte</div>` : "";
-    extContentInner += (configCRM.monitoreo.gcounttm) ? `<div class="box ext_ gcounttm"><div class="resultado">cargando listado de tickets del cliente...</div></div>` : "";
-    extContentInner += (configCRM.dgo.findgo) ? `<div class="btn btn-warning ext_ closedgo">Cerrar tkt (DGO)</div>` : "";
-    extContent.innerHTML = extContentInner
-    mainelement.appendChild(extContent)
-    configCRM.monitoreo.gcounttm ? __getHistoryTicket(dni).then(res => {
-        let thirtyDaysAgo = moment().subtract(30, 'days');
-        let filteredTickets = res.filter(ticket => {
-            let ticketDate = moment(ticket.fecha_creacion, 'DD/MM/YYYY HH:mm:ss'); // crea un objeto moment con el formato de la base de datos
-            return ticketDate.isAfter(thirtyDaysAgo); // compara si la fecha del ticket es posterior a la de hace 30 días
-        })
-        return filteredTickets;
-    }).then(data => {
-        const count = {};
-        for (const obj of data) {
-            const motivo = obj.motivo;
-            (count[motivo]) ? count[motivo]++ : count[motivo] = 1
-        }
-        return count
-    }).then(res => {
-        const divInterno = document.querySelector('.box.ext_.gcounttm .resultado')
-        console.log(res);
-        divInterno.innerHTML = ''
-        if (res !== null) {
-            for (const motivo in res) {
-                const item = document.createElement('div');
-                item.classList.add('item')
-                const dataElement = document.createElement('p');
-                const value = res[motivo];
-                dataElement.textContent = `${motivo}: ${value}`;
-                item.appendChild(dataElement);
-                divInterno.appendChild(item);
-            }
-        } else {
-            divInterno.innerHTML = '<div class="_ext loading"><i class="material-icons">cloud_off</i> <p>No se valida tickets en su historial</p></div>';
-        }
-    }) : '';
-    if (configCRM.monitoreo.alertcto) {
-        getHTML(tkt)
-            .then(result => {
-                document.querySelector('.ext_.statuscto .results').innerHTML = localStorage.getItem('pextReporting').includes(result) ? 'con' : 'sin'
+    if (alturaTotal >= 650 && anchuraScreen >= 1080) {
+        const thrownew = JSON.parse(window.localStorage.configCRM);
+        let configCRM = { base: thrownew.moduleConfig.base, monitoreo: thrownew.moduleConfig.monitoreo, dgo: thrownew.moduleConfig.dgo };
+        console.log(configCRM)
+        extContentInner += (configCRM.base.agendar) ? `<div class="btn btn-warning ext_ agendados">A la bandeja</div>` : "";
+        extContentInner += (configCRM.base.listTkt) ? `<div class="btn btn-warning ext_ ticketlist">Historico de llamadas</div>` : "";
+        extContentInner += (configCRM.base.serviceinfo) ? `<div class="btn btn-warning ext_ ontinfo">Info ONT</div>` : "";
+        extContentInner += (configCRM.base.multiupload) ? `<div class="btn btn-warning ext_ multiupload" data-isupload="false">Presiona aqui para subir todos las imagenes</div>` : "";
+        extContentInner += (configCRM.monitoreo.finlosrojo) ? `<div class="btn btn-warning ext_ finlosrojo">Cerrar tkt (monitoreo)</div>` : "";
+        extContentInner += (configCRM.monitoreo.sendLosRojo) ? `<div class="btn btn-warning ext_ sendlosrojo">Enviar LOS Rojo</div>` : "";
+        extContentInner += (configCRM.monitoreo.alertcto) ? `<div class="btn btn-warning ext_ statuscto">CTO <span class="results"></span> reporte</div>` : "";
+        extContentInner += (configCRM.monitoreo.gcounttm) ? `<div class="box ext_ gcounttm">
+        <div class="resultado">cargando listado de tickets del cliente...</div>
+        <div class="alert"></div>
+        </div>` : "";
+        extContentInner += (configCRM.dgo.findgo) ? `<div class="btn btn-warning ext_ closedgo">Cerrar tkt (DGO)</div>` : "";
+        extContent.innerHTML = extContentInner
+        mainelement.appendChild(extContent)
+
+        configCRM.monitoreo.gcounttm ? __getHistoryTicket(dni).then(res => {
+            let thirtyDaysAgo = moment().subtract(30, 'days');
+            // let filtrarDuplicados = moment().subtract(1, 'minutes')
+            let filteredTickets = res.filter((ticket, i) => {
+                // console.log(i)
+                let ticketDate = moment(ticket.fecha_creacion, 'DD/MM/YYYY HH:mm:ss'); // crea un objeto moment con el formato de la base de datos
+                let previousTicket = true
+                if (ticket.dni_contacto !== "20510944764") {
+                    if (typeof res[i - 1] !== "undefined") {
+                        let anterior = res[i - 1]
+                        console.log(anterior.motivo, ticket.motivo)
+                        const setRange = {
+                            off: moment(ticket.fecha_creacion, 'DD/MM/YYYY HH:mm:ss').subtract(1, 'minutes'),
+                            in: moment(ticket.fecha_creacion, 'DD/MM/YYYY HH:mm:ss').add(1, 'minutes')
+                        }
+                        previousTicket = !moment(anterior.fecha_creacion, 'DD/MM/YYYY HH:mm:ss').isBetween(setRange.off, setRange.in)
+                    }
+                    else {
+                        // console.log('es el "primero"')
+                        previousTicket = true
+                    }
+                }
+                // console.log(previousTicket)
+                return ticketDate.isAfter(thirtyDaysAgo) && previousTicket; // compara si la fecha del ticket es posterior a la de hace 30 días
             })
+            return filteredTickets;
+        }).then(data => {
+            console.log(data)
+            const count = {};
+            for (const obj of data) {
+                const motivo = obj.motivo;
+                (count[motivo]) ? count[motivo]++ : count[motivo] = 1
+            }
+            return count
+        }).then(dataToOrder => {
+            console.log(dataToOrder)
+            // Convertimos el objeto en un arreglo de pares clave-valor
+            const motivoArray = Object.entries(dataToOrder);
+
+            // Ordenamos el arreglo por los valores (de mayor a menor)
+            motivoArray.sort((a, b) => b[1] - a[1]);
+
+            // Creamos un nuevo objeto con las claves originales y los valores ordenados
+            const motivoOrdenado = {};
+            for (const [clave, valor] of motivoArray) {
+                motivoOrdenado[clave] = valor;
+            }
+            return motivoOrdenado;
+        }).then(res => {
+
+            const divInterno = document.querySelector('.box.ext_.gcounttm .resultado')
+            console.log(res);
+            divInterno.innerHTML = ''
+            if (res !== null) {
+                let sumaMotivos = 0;
+                for (const motivo in res) {
+                    const item = document.createElement('div');
+                    item.classList.add('item')
+                    const dataElement = document.createElement('p');
+                    const value = res[motivo];
+                    dataElement.textContent = `${motivo}: ${value}`;
+                    item.appendChild(dataElement);
+                    divInterno.appendChild(item);
+                    sumaMotivos += value;
+                }
+
+                const niveles = Object.getOwnPropertyNames(nivelesClientes)
+
+                // Buscamos el nivel adecuado
+                let nivelEncontrado = null;
+                for (const nivel in nivelesClientes) {
+                    if (Object.entries(res)[0][1] >= nivelesClientes[nivel].minMn && sumaMotivos >= nivelesClientes[nivel].minSum) {
+                        nivelEncontrado = nivel;
+                        break; // Salimos del bucle al encontrar el nivel adecuado
+                    }
+                }
+                // Mostramos el mensaje en pantalla
+                if (nivelEncontrado) {
+                    console.log(nivelesClientes[nivelEncontrado].msg);
+                    document.querySelector('.box.ext_.gcounttm .alert').textContent = nivelesClientes[nivelEncontrado].msg
+                } else {
+                    document.querySelector('.box.ext_.gcounttm .alert').textContent = 'Ups, error interno :x'
+                    console.log('No se encontró un nivel adecuado');
+                }
+
+                reposicionarBtnsModules(alturaTotal);
+            } else {
+                divInterno.innerHTML = '<div class="_ext loading"><i class="material-icons">cloud_off</i> <p>No se valida tickets en su historial</p></div>';
+            }
+        }) : '';
+        if (configCRM.monitoreo.alertcto) {
+            getHTML(tkt)
+                .then(result => {
+                    document.querySelector('.ext_.statuscto .results').innerHTML = localStorage.getItem('pextReporting').includes(result) ? 'con' : 'sin'
+                })
+        }
+        if (configCRM.base.agendar) { mainelement.querySelector(".ext_.agendados").addEventListener("click", () => CrmProcessShortly()) };
+        if (configCRM.monitoreo.sendLosRojo) { mainelement.querySelector(".ext_.sendlosrojo").addEventListener("click", () => CrmProcessShortly(2)) };
+        if (configCRM.monitoreo.finlosrojo) { mainelement.querySelector(".ext_.finlosrojo").addEventListener("click", () => CrmProcessShortly(3)) };
+        if (configCRM.base.listTkt) { mainelement.querySelector(".ext_.ticketlist").addEventListener("click", () => openLastTipiPopUp()) };
+        if (configCRM.base.serviceinfo) { mainelement.querySelector(".ext_.ontinfo").addEventListener("click", () => mostrarONTinfo()) };
+        if (configCRM.base.multiupload) { mainelement.querySelector(".ext_.multiupload").addEventListener("click", (ev) => uploadFile(ev)) };
+        limitchar(configCRM.base.limitChar);
+        extBox.appendChild(mainelement)
+        setTimeout(() => {
+            reposicionarBtnsModules(alturaTotal)
+        }, 150)
     }
-    if (configCRM.base.agendar) { mainelement.querySelector(".ext_.agendados").addEventListener("click", () => CrmProcessShortly()) };
-    if (configCRM.monitoreo.sendLosRojo) { mainelement.querySelector(".ext_.sendlosrojo").addEventListener("click", () => CrmProcessShortly(2)) };
-    if (configCRM.monitoreo.finlosrojo) { mainelement.querySelector(".ext_.finlosrojo").addEventListener("click", () => CrmProcessShortly(3)) };
-    if (configCRM.base.listTkt) { mainelement.querySelector(".ext_.ticketlist").addEventListener("click", () => openLastTipiPopUp()) };
-    if (configCRM.base.serviceinfo) { mainelement.querySelector(".ext_.ontinfo").addEventListener("click", () => mostrarONTinfo()) };
-    if (configCRM.base.multiupload) { mainelement.querySelector(".ext_.multiupload").addEventListener("click", (ev) => uploadFile(ev)) };
-    limitchar(configCRM.base.limitChar);
-    extBox.appendChild(mainelement)
 }
 function getUriFetch(windows) {
     const buildUri = (windows === 2 || windows === 7 || windows === 12) ? "asesor_casos_lista" : (windows === 5) ? 'asesor_agendados_lista2' : (windows === 3) ? 'visitas_lista_casos2_lista' : 'no_data'
@@ -174,7 +244,7 @@ const CrmProcessShortly = (type = 1) => {
     } else if (type === 2) {
         // envio visita por los rojo
         llenadoSelect(tipificaciones.vt);
-        tipificacionCustom = baseConfig.tipiCustom.sendLosRojo;
+        tipificacionCustom = baseConfig.tipiCustom.sendlosRojo;
         mostraragendas.display = 'none'
     } else if (type === 3) {
         // cerrar tkt por masivo pext
@@ -231,10 +301,12 @@ const limitchar = (turn) => {
 async function __getHistoryTicket(dni) {
     const response = await fetch(`ajax/soporte_asesor_casos_lista.php?id_empresa=1&id_subarea=8&buscador=${dni}&cb_busca_columna=2&ventana=2&cb_cliente_elite=3&estado=-`);
     return response.json();
-    // return response
 };
 async function uploadFile(entity) {
     console.log(entity)
+    // if () {
+    console.log(entity.target.dataset.statusupload)
+    // }
     const midata = new FormData();
     const formArea = document.forms.form_audio_adjunto;
     let dniAsesor = document.getElementById('txt_dni_asesor').value;
@@ -364,11 +436,6 @@ function longPoll() {
     }
     // setTimeout(longPoll, 40000);
 };
-function fieldBuilder(...args) {
-    if (typeof args === 'object') {
-
-    }
-}
 function SaveSettingCrm() {
     console.log("se acciono no se de donde")
     let toChange = localDefault;
@@ -384,6 +451,13 @@ function SaveSettingCrm() {
                 toChange.moduleConfig[name][m] = false
             }
         })
+    })
+    Object.getOwnPropertyNames(toChange.themePicked).forEach(name => {
+        console.log('---' + name + '---')
+        const pre = JSON.parse(localStorage.configCRM).themePicked.now;
+        const now = document.getElementById("style_theme").value
+        toChange.themePicked.now = now;
+        toChange.themePicked.previus = pre !== '' ? pre : 'ninguno'
     })
     localStorage.configCRM = JSON.stringify(toChange)
 }
@@ -435,15 +509,32 @@ const loadModules = () => {
                 _subTemp.appendChild(detailsTemp);
             })
             _boxGen.appendChild(_itemTemp);
-            document.querySelector("._box-addons").appendChild(_boxGen)
+            document.querySelector("._box-addons").append(_boxGen)
         }
     })
     document.querySelectorAll(".item [type=checkbox]").forEach((e) => {
         e.addEventListener("change", () => {
             console.log("no creo que sea este ")
             SaveSettingCrm()
-        }
-        );
+        });
     })
+};
+const reposicionarBtnsModules = (alturaTotal) => {
+    let alturaPanel = document.querySelector(".ext_.content").offsetHeight;
+    let posibleCentrado = (alturaTotal - alturaPanel) / 2;
+    console.log(alturaPanel, alturaTotal, posibleCentrado)
+    document.querySelector(".ext_.content").style.bottom = posibleCentrado + "px"
+};
+const applyStyles = (estilosLoaded) => {
+    // console.log(estilosLoaded)
+    // document.addEventListener("l")
+    if (estilosLoaded.length >= 1) {
+        let modifidier = document.styleSheets.length - 1
+        console.log(modifidier)
+
+        estilosLoaded.forEach(s => {
+            document.styleSheets[modifidier].insertRule(s)
+        })
+    }
 
 }

@@ -1,33 +1,29 @@
 body.theme-default {
   overflow: hidden;
+}
 
-  & nav {
-    &.navbar {
-      background-color: black;
-    }
-  }
+body.theme-default nav.navbar {
+  background-color: black;
+}
 
-  & section {
-    & .menu {
-      background-color: black;
+body.theme-default section .menu {
+  background-color: black;
+}
 
-      & ul>li~li {
-        color: white;
+body.theme-default section .menu ul>li~li {
+  color: white;
+}
 
-        &:hover {
-          color: #a84cfd !important;
-        }
-      }
-    }
-  }
+body.theme-default section .menu ul>li~li:hover {
+  color: #a84cfd !important;
 }
 
 .page-loader-wrapper {
   background: #000 !important;
+}
 
-  & p {
-    color: white !important;
-  }
+.page-loader-wrapper p {
+  color: white !important;
 }
 
 body {
@@ -95,8 +91,6 @@ a.waves-effect.waves-block>* {
   text-decoration: none;
 }
 
-
-
 div#collapseOne_1.panel-collapse.in,
 div#collapseOne_1.panel-collapse.collapsing {
   overflow: auto !important;
@@ -130,4 +124,11 @@ a.list-group-item {
 .login-box>.card .footer .status {
   background-color: #5a4585;
   color: white;
+}
+
+.pagination>li.active a,
+.pagination>li.previous a,
+.pagination>li.next a {
+  background: #38024fe0 !important;
+  color: white !important;
 }

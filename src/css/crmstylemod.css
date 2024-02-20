@@ -44,7 +44,6 @@ button.btn.waves-effect {
   align-items: stretch;
   padding: 1rem;
   border-radius: 1rem;
-  bottom: 35%;
   right: 7rem;
 }
 
@@ -179,6 +178,10 @@ section.content {
   margin-bottom: 1.5rem;
 }
 
+div#div_ajax_atenciones {
+  padding: 0 0 2rem 0;
+}
+
 .main_box {
   width: max-content;
 }
@@ -301,10 +304,7 @@ div#div_ajax_tabla_file_subidos .body.table-responsive {
 .box.ext_.gcounttm .resultado {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  flex-wrap: nowrap;
-  align-content: space-around;
-  justify-content: center;
+  justify-content: flex-start
 }
 
 .ext_.content {

@@ -1,8 +1,9 @@
 const Areas = ['Residencial', 'Gamer', 'Dgo', 'Monitoreo'];
+// load styles
+applyStyles(baseConfig.themePicked !== "" ? styles[baseConfig.themePicked.now] : [])
+//----
 let validateAppendModal = ValidatePath(['index', 'atc_registro_llamadas', 'login_form'])
-if (window.document.location.href.includes('172.16.66.76')) {
-    document.body.style.filter = 'invert(1)'
-}
+window.document.location.href.includes('172.16.66.76') ? document.body.style.filter = 'invert(1)' : '';
 if (!ValidatePath('login_form')) {
     // const configSaved = JSON.parse(localStorage.configCRM)
     document.querySelector(".image img").src = baseConfig.profileConfig.avatar;
@@ -69,3 +70,4 @@ if (!validateAppendModal.some(path => path)) {
 
 
 
+// '.modal-content.modal-col-blue > form input, .modal-content.modal-col-blue > form select,.modal-content.modal-col-black > form input, .modal-content.modal-col-black > form select,.modal-content.modal-col-cyan > form input, .modal-content.modal-col-cyan > form select.modal-content.modal-col-light-blue > form input, .modal-content.modal-col-light-blue > form select,.modal-content.modal-col-teal > form input, .modal-content.modal-col-teal > form select {background-color: black!important;color: white;border-bottom-style: groove;}'

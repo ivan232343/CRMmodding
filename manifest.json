@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "version": "12",
+  "version": "12.6.0",
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
   "default_locale": "es",
@@ -23,20 +23,16 @@
       ],
       "js": [
         "src/js/vendor/moment.min.js",
+        "src/js/main/style.build.js",
 
         "src/js/main/local.builder.js",
         "src/js/main/base.function.js",
         "src/js/main/base.inital.js",
-        "src/js/main/local.popup.temp.js",
-        "src/js/main/local.logical.js",
-        
-        "src/js/styles/theme-builder.js",
-        "src/js/styles/forceStyles.js"
+        "src/js/main/local.popup.js",
+        "src/js/main/local.logical.js"
       ],
       "css": [
-        "src/css/crmstylemod.css",
-        "src/js/styles/theme-default.css",
-        "src/js/styles/theme-personal.css"
+        "src/css/crmstylemod.css"
       ]
     }
   ]
