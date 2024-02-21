@@ -1,14 +1,15 @@
 const styles = {
     black: [
-        'table#tablaCasos thead tr th,section.content .card .body,.theme-red .sidebar .legal {background: black !important;color: white;}',
-        'section.content.card.header.bg - indigo,.theme-red.navbar,.theme - red.sidebar.menu.list.ml - menu {background: black!important;}',
+        'table#tablaCasos thead tr th,section.content .card .body,.theme-red .sidebar .legal, .theme-red .navbar{background: black !important;color: white;}',
+        'section.content.card.header.bg-indigo,.theme-red.navbar,.theme-red.sidebar.menu.list.ml-menu {background: black!important;}',
         'body,.theme-red.sidebar.menu.list.toggled,.sidebar {background: black;}',
-        '.table-striped>tbody>tr:nth-of-type(odd){color: black;background- color: white;font-weight: bolder;font-size: 1.5rem;}',
-        '.table-striped>tbody>tr:nth-of-type(even) {background - color: #040404;}',
+        '.table-striped>tbody>tr:nth-of-type(odd){color: black;background-color: white;font-weight: bolder;font-size: 1.5rem;}',
+        '.table-striped>tbody>tr:nth-of-type(even) {background-color: #040404;}',
         'ul.list li: not(first) > a i,ul.list li: not(first) > a span,ul.list li: not(first) > a {color: white!important;}',
-        '.modal-content.modal-col-blue {background - color: black;}',
+        '.modal-content.modal-col-blue, {background-color: black;}',
         '.modal-content.modal-col-blue > form#form_caso_cierre input,.modal-content.modal-col-blue > form#form_caso_cierre select {background-color: black!important;color: white;}',
-        '#div_ajax_tabla_file_subidos table.table.table.bg-blue {background-color: black!important;}'
+        '#div_ajax_tabla_file_subidos table.table.table.bg-blue {background-color: black!important;}',
+        'a.toggled.waves-effect,a.waves-effect.waves-block:hover,a.waves-effect.waves-block:hover>* {color:black !important;}',
     ],
     personal: [
         'body.theme-default{overflow:hidden}',
@@ -88,7 +89,7 @@ const styles = {
         ".theme-deep-orange .navbar {background: #6028d5 ;}",
         ".theme-deep-orange .navbar ,.theme-red .navbar{ background-color: #472d7dc2 !important;box-shadow: unset;-webkit-box-shadow: unset;-moz-box-shadow: unset;-ms-box-shadow: unset;}",
         "table.table.table.bg-blue a, table.table.table.bg-blue a:active, table.table.table.bg-blue a:focus{   background-color: unset !important;color: white;text-decoration: none;font-weight: bolder;font-size: 1.5rem;word-break: break-word;}",
-        ".sidebar .legal .copyright {word-break: break-word;text-wrap: pretty !important;color:white;}",
+        ".sidebar .legal .copyright {color:white;}",
         ".theme-red .sidebar .legal {background-color: #000;}"
     ]
 }

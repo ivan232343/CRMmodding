@@ -186,6 +186,10 @@ div#div_ajax_atenciones {
   width: max-content;
 }
 
+.sidebar .legal .copyright {
+  word-break: break-word;
+  text-wrap: pretty !important;
+}
 
 
 .extension.content._getcto {
