@@ -62,7 +62,7 @@ const mostrarCamposCliente = (tkt, dni, codPedido) => {
         extContentInner += (configCRM.monitoreo.finlosrojo) ? `<div class="btn btn-warning ext_ finlosrojo">Cerrar tkt (monitoreo)</div>` : "";
         extContentInner += (configCRM.monitoreo.sendLosRojo) ? `<div class="btn btn-warning ext_ sendlosrojo">Enviar LOS Rojo</div>` : "";
         extContentInner += (configCRM.monitoreo.alertcto) ? `<div class="btn btn-warning ext_ statuscto">CTO <span class="results"></span> reporte</div>` : "";
-        extContentInner += (configCRM.monitoreo.gcounttm) ? `<div class="box ext_ gcounttm">
+        extContentInner += (configCRM.base.gcounttm) ? `<div class="box ext_ gcounttm">
         <div class="resultado">cargando listado de tickets del cliente...</div>
         <div class="alert"></div>
         </div>` : "";
@@ -70,7 +70,7 @@ const mostrarCamposCliente = (tkt, dni, codPedido) => {
         extContent.innerHTML = extContentInner
         mainelement.appendChild(extContent)
 
-        configCRM.monitoreo.gcounttm ? __getHistoryTicket(dni).then(res => {
+        configCRM.base.gcounttm ? __getHistoryTicket(dni).then(res => {
             let thirtyDaysAgo = moment().subtract(30, 'days');
             // let filtrarDuplicados = moment().subtract(1, 'minutes')
             let filteredTickets = res.filter((ticket, i) => {
@@ -452,13 +452,10 @@ function SaveSettingCrm() {
             }
         })
     })
-    Object.getOwnPropertyNames(toChange.themePicked).forEach(name => {
-        console.log('---' + name + '---')
-        const pre = JSON.parse(localStorage.configCRM).themePicked.now;
-        const now = document.getElementById("style_theme").value
-        toChange.themePicked.now = now;
-        toChange.themePicked.previus = pre !== '' ? pre : 'ninguno'
-    })
+    const pre = JSON.parse(localStorage.configCRM).themePicked.now;
+    const now = document.getElementById("style_theme").value
+    toChange.themePicked.now = now;
+    toChange.themePicked.previus = pre !== '' ? pre : 'ninguno'
     localStorage.configCRM = JSON.stringify(toChange)
 }
 const copyTextTable = () => {
@@ -537,4 +534,28 @@ const applyStyles = (estilosLoaded) => {
         })
     }
 
+}
+const encontrarElementosFaltantes = (arr1, arr2) => {
+    const conjuntoUnico = new Set([...arr1, ...arr2]);
+    const elementosFaltantes = [];
+
+    for (const elemento of conjuntoUnico) {
+        if (!arr1.includes(elemento)) {
+            elementosFaltantes.push({ elemento, origen: 'array2' });
+        }
+        if (!arr2.includes(elemento)) {
+            elementosFaltantes.push({ elemento, origen: 'array1' });
+        }
+    }
+
+    return elementosFaltantes;
+}
+const sonIguales = (a, b) => {
+    if (!Array.isArray(a) || !Array.isArray(b)) return false;
+    let sorted_a = [...a].sort();
+    let sorted_b = [...b].sort();
+    return (
+        sorted_a.length === sorted_b.length &&
+        sorted_a.every((element, index) => element === sorted_b[index])
+    );
 }

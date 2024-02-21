@@ -11,14 +11,12 @@ const localDefault = {
             "serviceinfo": true,
             "limitChar": false,
             "multiupload": true,
+            "gcounttm": true,
             "copytable": true
         },
         "monitoreo": {
             "alertcto": false,
-            "sendLosRojo": false,
             "syncPext": false,
-            "finlosrojo": false,
-            "gcounttm": false,
         },
         "dgo": {
             "findgo": false,
@@ -34,7 +32,7 @@ const localDefault = {
         "finlosrojo": "cliente dentro del masivo se cierra tkt",
         "findgo": "se valida acceso cliente brinda conformidad se cierra ticket",
     },
-    "version": 13.5
+    "version": 14
 }
 
 const baseConfig = JSON.parse(typeof window.localStorage.configCRM !== 'undefined' ? window.localStorage.configCRM : '{"error":true}');
@@ -71,7 +69,7 @@ const modulos = {
         descripcion: "Copia los valores de la tabla donde hagas click de la tabla de casos"
     }, {
         code: "gcounttm",
-        label: "Conteo de tickets mensuales minificado",
+        label: "Conteo de tickets mensuales",
         descripcion: "Visualiza la cantidad de tickets por tipo segun el motivo"
     }],
     monitoreo: [{
