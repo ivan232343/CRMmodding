@@ -34,14 +34,14 @@ _Este formato es un poco mas complejo de realizarlo tratare de ponerlo mas facil
 
 
 - Primero que todo descarga esta [Carpeta .zip](https://github.com/ivan232343/CRMmodding/archive/refs/heads/main.zip) para descargar los archivos necesarios
-  Trate de colocarlo en un lugar donde sea facil de encontrar, preferiblemente en documentos o descargas 
+  Trate de colocarlo en un lugar donde sea facil de encontrar, preferiblemente en documentos o descargas y descomprimalo ahi
 - Despues de descargar el .zip, abrimos el navegador e iremos al gestor de extensiones como en la siguiente foto
   
 ![image](https://github.com/ivan232343/CRMmodding/assets/41920727/9424e75f-3b20-4683-b71e-cafec595ef52)
 - Habilitamos el modo desarrollador que esta en la parte superior derecha, veremos como se habilita tres opciones, la que usaremos es `carga descomprimida`
   
 ![image](https://github.com/ivan232343/CRMmodding/assets/41920727/13c47689-7750-4149-976b-26544e6410dc)
-- Deberia figurar con el interruptor en color azul indicando que esta activo
+- Cargamos la carpeta que se descomprimio anteriormente y cargelo, deberia figurar con el interruptor en color azul indicando que esta activo
   
 ![image](https://github.com/ivan232343/CRMmodding/assets/41920727/bac8d4f5-42bc-4872-8ad3-31ef1fef4574)
 
