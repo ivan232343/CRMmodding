@@ -6,13 +6,16 @@ let validateAppendModal = ValidatePath(['index', 'atc_registro_llamadas', 'login
 window.document.location.href.includes('172.16.66.76') ? document.body.style.filter = 'invert(1)' : '';
 if (!ValidatePath('login_form')) {
     // const configSaved = JSON.parse(localStorage.configCRM)
-    document.querySelector(".image img").src = baseConfig.profileConfig.avatar;
+    let a = document.querySelector(".image img");
+    a.src = baseConfig.profileConfig.avatar;
+    a.width = 65;
+    a.height = 65;
     let fondo = document.querySelector(".user-info");
     fondo.style.backgroundImage = `url(${baseConfig.profileConfig.background})`;
     fondo.style.backgroundSize = "cover";
     fondo.style.backgroundRepeat = "no-repeat";
     fondo.style.backgroundPosition = "center";
-    fondo.style.backgroundOrigin = "content-box";
+    fondo.style.backgroundOrigin = "padding-box";
     let letter = document.querySelector(".info-container");
     letter.childNodes.forEach(e => {
         if (e.nodeName !== "#text") {

@@ -14,6 +14,8 @@ const styles = {
         'button.bg-indigo{background: black !important;border-radius: 1rem !important;box-shadow: rgb(0 0 0) 2px 2px 6px 1px !important;}',
         '::-webkit-scrollbar{width: 9px;background: black;}',
         '::-webkit-scrollbar-thumb{background: white;border-radius: 1rem;}',
+        '.dropdown-menu {background-color: black;}',
+        '.dropdown-menu > * {font-size: larger;}',
     ],
     moradoDark: [
         'body.theme-default{overflow:hidden}',

@@ -15,8 +15,8 @@ const localDefault = {
             "copytable": true
         },
         "monitoreo": {
-            "alertcto": false,
-            "syncPext": false,
+            "sendLosRojo": false,
+            "finlosrojo": false,
         },
         "dgo": {
             "findgo": false,

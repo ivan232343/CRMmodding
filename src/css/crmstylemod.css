@@ -323,3 +323,17 @@ div#div_ajax_tabla_file_subidos .body.table-responsive {
 .info-container>div {
   font-size: 1.35rem !important;
 }
+
+.user-info {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-evenly;
+  min-height: 135px;
+  max-height: 350px;
+  height: initial !important;
+}
+
+.sidebar .user-info .info-container {
+  position: unset !important;
+}
