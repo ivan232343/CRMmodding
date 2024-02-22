@@ -1,0 +1,121 @@
+:root {
+  --primary-color-1: #541bc1;
+  --primary-color-2: #6c33b7;
+  --primary-color-3: #753cff;
+  --primary-color-4: #8d00e5;
+  --primary-color-5: #2c0755;
+  --secondary-color-1: #70ff03;
+}
+
+.menu>div li.header {
+  background-color: var(--primary-color-1) !important;
+}
+
+.list-group-item:nth-child(odd)>.row {
+  background: var(--primary-color-2) !important;
+}
+
+.outer_div_telefono .overflow-panel {
+  height: 70rem !important;
+  overflow: auto !important;
+}
+
+.outer_div_telefono>div a .row h3,
+a.list-group-item,
+a.list-group-item:hover,
+button.list-group-item,
+button.list-group-item:hover {
+  color: white !important;
+}
+
+.list-group-item:nth-child(even)>.row {
+  background: black;
+  color: white;
+}
+
+a.toggled.waves-effect,
+a.waves-effect.waves-block:hover,
+a.waves-effect.waves-block:hover>* {
+  color: var(--primary-color-4) !important;
+}
+
+.panel {
+  border-color: var(--primary-color-4) !important;
+  background-color: black !important;
+  color: white;
+
+  &.panel-primary {
+    padding: 1rem;
+
+    &>.panel-heading {
+      color: #fff;
+      background-color: var(--primary-color-2);
+      border-color: var(--primary-color-2);
+    }
+  }
+}
+
+.theme-deep-orange .navbar {
+  background-color: var(--primary-color-2);
+}
+
+body.theme-red {
+  height: 100vh;
+  background-position: center;
+}
+
+aside#leftsidebar {
+  background: transparent;
+}
+
+.menu {
+  background: transparent;
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+  background: var(--primary-color-3);
+}
+
+::-webkit-scrollbar-thumb {
+  background: black;
+  border-radius: 1rem;
+}
+
+.outer_div .panel-success>.panel-heading {
+  filter: invert(1);
+}
+
+.outer_div .panel-success>.panel-heading h2.panel-title {
+  background-color: var(--secondary-color-1) !important;
+  color: black !important;
+}
+
+.btn-consultar-deuda {
+  border-color: var(--secondary-color-1) !important;
+  color: black !important;
+  font-size: 1.5rem;
+}
+
+.list-group .list-group-bg-grey,
+.list-group .list-group-bg-grey:hover {
+  background-color: var(--primary-color-5) !important;
+}
+
+div#div_ajax_busca_tickets>div {
+  & .panel.panel-primary .panel-title {
+    background: var(--primary-color-2) !important;
+
+    & a {
+      color: white;
+    }
+  }
+}
+
+li.list-group-item {
+  background: black;
+}
+
+li.list-group-item.list-group-bg-light-blue {
+  background-color: var(--primary-color-1);
+}

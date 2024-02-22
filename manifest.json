@@ -1,28 +1,38 @@
 {
-  "name": "CRM modding",
-  "manifest_version": 2,
-  "version": "4.6",
-  "description": "herramientas adicionales para CRM experiencia y una que otra mejora /\n ahora puedes personalizar tu avatar y el fondo",
-  "browser_action": {
-    "default_icon": "ico.jpeg"
+  "manifest_version": 3,
+  "version": "24.2.25",
+  "name": "__MSG_extensionName__",
+  "description": "__MSG_extensionDescription__",
+  "default_locale": "es",
+  "action": {
+    "default_icon": {
+        "19": "src/logo/19.png",
+        "38": "src/logo/38.png"
+      }
   },
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "declarativeContent"
   ],
   "content_scripts": [
     {
       "matches": [
-        "http://172.27.201.14/pages/*"
+        "http://172.27.201.14/pages/*",
+        "https://appcrm.win.pe/*",
+        "https://172.16.66.76:31943/*"
       ],
       "js": [
-        "back_funcs/popConfigExt.js",
-        "back_funcs/custom_functions.js",
-        "module/basicfuncs.js",
-        "back_funcs/ag.js",
-        "back_funcs/forceStyles.js"
+        "src/js/vendor/moment.min.js",
+        "src/js/main/style.build.js",
+
+        "src/js/main/local.builder.js",
+        "src/js/main/base.function.js",
+        "src/js/main/base.inital.js",
+        "src/js/main/local.popup.js",
+        "src/js/main/local.logical.js"
       ],
       "css": [
-        "css/crmstylemod.css"
+        "src/css/crmstylemod.css"
       ]
     }
   ]

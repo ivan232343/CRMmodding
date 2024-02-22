@@ -1,0 +1,49 @@
+table#tablaCasos thead tr th,
+section.content .card .body,
+.theme-red .sidebar .legal {
+    background: black !important;
+    color: white;
+}
+
+section.content .card .header.bg-indigo,
+.theme-red .navbar,
+.theme-red .sidebar .menu .list .ml-menu {
+    background: black !important;
+}
+
+body,
+.theme-red .sidebar .menu .list .toggled,
+.sidebar {
+    background: black;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd) {
+    color: black;
+    background-color: white;
+    font-weight: bolder;
+    font-size: 1.5rem;
+}
+
+.table-striped>tbody>tr:nth-of-type(even) {
+    background-color: #040404;
+}
+
+ul.list li:not(first)>a i,
+ul.list li:not(first)>a span,
+ul.list li:not(first)>a {
+    color: white !important;
+}
+
+.modal-content.modal-col-blue {
+    background-color: black;
+}
+
+.modal-content.modal-col-blue>form#form_caso_cierre input,
+.modal-content.modal-col-blue>form#form_caso_cierre select {
+    background-color: black !important;
+    color: white;
+}
+
+#div_ajax_tabla_file_subidos table.table.table.bg-blue {
+    background-color: black !important;
+}
