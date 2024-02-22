@@ -46,4 +46,4 @@ _Este formato es un poco mas complejo de realizarlo tratare de ponerlo mas facil
 ![image](https://github.com/ivan232343/CRMmodding/assets/41920727/bac8d4f5-42bc-4872-8ad3-31ef1fef4574)
 
 ---
-~Si todo salio bien entonces ya deberia estar en funcionamiento si no fue asi entonces sientase libre de comunicarse a este [whatsapp](https://wa.me/51930573719) para ayudarle en seguida~
+Si todo salio bien entonces ya deberia estar en funcionamiento si no fue asi entonces sientase libre de comunicarse a este [whatsapp](https://wa.me/51930573719) para ayudarle en seguida
