@@ -112,7 +112,7 @@ const tipificaciones = {
         tipo: { value: '202', text: 'Problemas con el servicio' },
         motivo: { value: '408', text: 'Internet - sin acceso a pagina web' },
     },
-    agenda: {
+    agendar: {
         caso: 36,
         tipo: { value: '244', text: 'Agendamiento' },
         motivo: { value: '635', text: 'Se agenda llamada' },
