@@ -33,7 +33,7 @@ _Con este formato podras instalar el archivo .crx directamente al navegador, con
 _Este formato es un poco mas complejo de realizarlo tratare de ponerlo mas facil, para ello usare capturas hechas en Chrome_
 
 
-- Primero que todo descarga esta [Carpeta .zip](https://github.com/ivan232343/CRMmodding/archive/refs/heads/main.zip) para descargar los archivos necesarios
+- Primero que todo descarga esta [Carpeta .zip](https://github.com/ivan232343/CRMmodding/archive/refs/heads/beta.zip) para descargar los archivos necesarios
   Trate de colocarlo en un lugar donde sea facil de encontrar, preferiblemente en documentos o descargas y descomprimalo ahi
 - Despues de descargar el .zip, abrimos el navegador e iremos al gestor de extensiones como en la siguiente foto
   
