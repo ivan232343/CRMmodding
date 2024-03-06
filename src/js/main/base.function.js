@@ -559,3 +559,7 @@ const sonIguales = (a, b) => {
         sorted_a.every((element, index) => element === sorted_b[index])
     );
 }
+const boostGetTicket = (f) => {
+    console.log(ValidatePath("soporte_asesor_casos"), f)
+
+}
