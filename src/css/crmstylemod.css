@@ -262,7 +262,7 @@ div#div_ajax_busca_tickets>div {
 }
 
 div#div_ajax_tabla_file_subidos .body.table-responsive {
-  height: 30rem;
+  max-height: 16rem;
 }
 
 ._settings {
