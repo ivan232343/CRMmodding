@@ -3,19 +3,6 @@ const Areas = ['Residencial', 'Gamer', 'Dgo', 'Monitoreo'];
 applyStyles(baseConfig.themePicked !== "" ? styles[baseConfig.themePicked.now] : [])
 //----
 let validateAppendModal = ValidatePath(['index', 'atc_registro_llamadas', 'login_form']);
-const f = true
-if (f && ValidatePath("soporte_asesor_casos")) {
-    const scriptInsert = document.createElement("script")
-    scriptInsert.type = "text/javascript"
-    scriptInsert.referrerPolicy = "no-referrers"
-    scriptInsert.crossOrigin = ""
-    scriptInsert.async = true
-    scriptInsert.defer = true
-    scriptInsert.innerHTML = `setInterval(() => {
-        $('#tablaCasos').DataTable().ajax.reload(null, false);
-    }, 1000)`
-    document.body.appendChild(scriptInsert)
-}
 window.document.location.href.includes('172.16.66.76') ? document.body.style.filter = 'invert(1)' : '';
 if (!ValidatePath('login_form')) {
     // const configSaved = JSON.parse(localStorage.configCRM)
